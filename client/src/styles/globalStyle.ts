@@ -92,6 +92,7 @@ video {
   box-sizing:border-box ;
   text-decoration:none ;
   user-select: none;
+  font-family: COOKIE;
   -ms-user-select: none;
   :link {
     color: black;
