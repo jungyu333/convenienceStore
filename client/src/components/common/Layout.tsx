@@ -9,7 +9,7 @@ import {
   Toolbar,
   Tooltip,
 } from '@mui/material';
-import { Children, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled(AppBar)`
@@ -51,7 +51,7 @@ function Layout() {
   };
 
   return (
-    <Wrapper position="static">
+    <Wrapper>
       <CustomContainer>
         <CustomToolbar>
           <h1>Logo</h1>
