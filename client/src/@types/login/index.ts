@@ -5,6 +5,7 @@ export interface IInputProps {
   label: string;
   register: UseFormRegisterReturn;
   error?: FieldError;
+  isAuth?: boolean;
 }
 
 export interface ILogInData {

@@ -1,8 +1,10 @@
 import { Container } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ILogInData } from '../@types/login';
+import SubmitButton from '../components/common/SubmitButton';
 import Input from '../components/login/Input';
 
 const Wrapper = styled(Container)`
@@ -21,7 +23,7 @@ const Wrapper = styled(Container)`
     min-height: 600px;
     width: 500px;
     border-radius: 10px;
-    box-shadow: 2px 2px 2px ${({ theme }) => theme.colors.lightgray};
+    box-shadow: 4px 4px 4px ${({ theme }) => theme.colors.lightgray};
   }
 `;
 
@@ -66,26 +68,11 @@ const BottomButtonContainer = styled.div`
   margin-bottom: 10px;
   font-size: 0.9rem;
   letter-spacing: 2px;
-  cursor: pointer;
-  & span {
+
+  & a {
     &:hover {
       color: ${({ theme }) => theme.colors.lightgray};
     }
-  }
-`;
-
-const LogInButton = styled.button`
-  padding: 10px 0;
-  border-radius: 10px;
-  margin-top: 20px;
-  border: none;
-  background-color: ${({ theme }) => theme.colors.orange};
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: white;
-  cursor: pointer;
-  &:hover {
-    color: ${({ theme }) => theme.colors.lightgray};
   }
 `;
 
@@ -129,10 +116,10 @@ function LogIn() {
           />
         </LogInInputContainer>
         <BottomButtonContainer>
-          <span>관리자 계정으로 로그인</span>
-          <span>계정이 없으신가요?</span>
+          <Link to="/">관리자 계정으로 로그인</Link>
+          <Link to={'/signup'}>계정이 없으신가요?</Link>
         </BottomButtonContainer>
-        <LogInButton>Log In</LogInButton>
+        <SubmitButton text="Log In" />
       </LogInForm>
     </Wrapper>
   );

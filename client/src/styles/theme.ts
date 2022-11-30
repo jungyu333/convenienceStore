@@ -2,8 +2,8 @@ import { DefaultTheme } from 'styled-components';
 
 const colors = {
   orange: '#f09618',
-  gray: '#bab8b5',
-  lightgray: '#dbd9d5',
+  gray: '#c7c3c3',
+  lightgray: '#d9d4d4',
   red: '#d60202',
 };
 
