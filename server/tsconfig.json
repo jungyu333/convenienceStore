@@ -1,12 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es2016",
     "module": "commonjs",
-    "outDir": "./dist",
-    "rootDir": ".",
-    "strict": true,
-    "moduleResolution": "node",
     "esModuleInterop": true,
-    "jsx": "react"
+
+    "forceConsistentCasingInFileNames": true,
+    "typeRoots": ["./types"],
+    "strict": true,
+
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "emitDecoratorMetadata": true
+  },
+  "ts-node": {
+    "files": true
   }
 }
