@@ -2,6 +2,10 @@ export interface ISignUpData {
   email: string;
   password: string;
   passwordCheck: string;
-  auth: number;
+  auth: string;
   nickname: string;
+}
+
+export interface IEmailAuthData {
+  email: string;
 }
