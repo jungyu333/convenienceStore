@@ -2,10 +2,14 @@ import express, { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import { AppDataSource } from './data-source';
 import cors from 'cors';
+import userRouter from './routes/user';
 
 dotenv.config();
 
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
@@ -14,8 +18,7 @@ app.use(
   }),
 );
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use('/api/user', userRouter);
 
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
   res.send('welcome!');

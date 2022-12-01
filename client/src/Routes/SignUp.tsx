@@ -1,11 +1,13 @@
 import { Container } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { ISignUpData } from '../@types/signup';
 import SubmitButton from '../components/common/SubmitButton';
 import Input from '../components/login/Input';
 import AvatarInput from '../components/signup/AvatarInput';
+import { RootState } from '../store/store';
 
 const Wrapper = styled(Container)`
   background-color: ${({ theme }) => theme.colors.gray};
@@ -46,18 +48,35 @@ const SignUpInputContainer = styled.div`
 `;
 
 function SignUp() {
+  const { avatarPath } = useSelector((state: RootState) => state.user);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm<ISignUpData>();
-  const onSubmitSignUp = (data: ISignUpData) => {
-    console.log(data);
+
+  const onValid = (data: ISignUpData) => {
+    if (avatarPath) {
+      const formData = new FormData();
+      formData.append('email', data.email);
+      formData.append('password', data.password);
+      formData.append('nickname', data.nickname);
+      formData.append('avatar', avatarPath);
+    } else {
+      const formData = new FormData();
+      formData.append('email', data.email);
+      formData.append('password', data.password);
+      formData.append('nickname', data.nickname);
+    }
   };
 
   return (
     <Wrapper>
-      <SignUpForm onSubmit={handleSubmit(onSubmitSignUp)}>
+      <SignUpForm
+        encType="multipart/form-data"
+        onSubmit={handleSubmit(onValid)}
+      >
         <AvatarInput />
 
         <SignUpInputContainer>
@@ -65,7 +84,8 @@ function SignUp() {
             type="email"
             label="Email ID"
             error={errors.email}
-            isAuth={true}
+            isEmail={true}
+            getValues={getValues}
             register={register('email', {
               required: 'Email ID를 입력해주세요',
             })}
@@ -74,6 +94,8 @@ function SignUp() {
             type="number"
             label="인증 번호"
             error={errors.auth}
+            isAuth={true}
+            getValues={getValues}
             register={register('auth', {
               required: '인증번호를 입력해주세요',
               minLength: {
