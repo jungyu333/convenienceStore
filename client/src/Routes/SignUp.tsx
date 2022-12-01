@@ -1,10 +1,11 @@
-import { Avatar, Container } from '@mui/material';
+import { Container } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { ISignUpData } from '../@types/signup';
 import SubmitButton from '../components/common/SubmitButton';
 import Input from '../components/login/Input';
+import AvatarInput from '../components/signup/AvatarInput';
 
 const Wrapper = styled(Container)`
   background-color: ${({ theme }) => theme.colors.gray};
@@ -38,33 +39,10 @@ const SignUpForm = styled.form`
   }
 `;
 
-const AvatarContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const CustomAvatar = styled(Avatar)`
-  width: 60px;
-  height: 60px;
-  margin-right: 20px;
-  box-shadow: 2px 2px 2px gray;
-`;
-
 const SignUpInputContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
-`;
-
-const AvatarButton = styled.div`
-  cursor: pointer;
-  padding: 8px 10px;
-  border: 1px solid gray;
-  border-radius: 5px;
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.lightgray};
-  }
 `;
 
 function SignUp() {
@@ -76,13 +54,11 @@ function SignUp() {
   const onSubmitSignUp = (data: ISignUpData) => {
     console.log(data);
   };
+
   return (
     <Wrapper>
       <SignUpForm onSubmit={handleSubmit(onSubmitSignUp)}>
-        <AvatarContainer>
-          <CustomAvatar src="/broken-image.jpg" />
-          <AvatarButton>Image</AvatarButton>
-        </AvatarContainer>
+        <AvatarInput />
 
         <SignUpInputContainer>
           <Input
