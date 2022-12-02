@@ -2,12 +2,15 @@ import { Container } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { ISignUpData } from '../@types/signup';
+import { signUp } from '../action/signUp';
 import SubmitButton from '../components/common/SubmitButton';
 import Input from '../components/login/Input';
 import AvatarInput from '../components/signup/AvatarInput';
-import { RootState } from '../store/store';
+import { RootState, useAppDispatch } from '../store/store';
 
 const Wrapper = styled(Container)`
   background-color: ${({ theme }) => theme.colors.gray};
@@ -48,7 +51,11 @@ const SignUpInputContainer = styled.div`
 `;
 
 function SignUp() {
-  const { avatarPath } = useSelector((state: RootState) => state.user);
+  const navigation = useNavigate();
+  const { avatarPath, authDone, overrap } = useSelector(
+    (state: RootState) => state.user,
+  );
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -57,17 +64,37 @@ function SignUp() {
   } = useForm<ISignUpData>();
 
   const onValid = (data: ISignUpData) => {
-    if (avatarPath) {
-      const formData = new FormData();
-      formData.append('email', data.email);
-      formData.append('password', data.password);
-      formData.append('nickname', data.nickname);
-      formData.append('avatar', avatarPath);
+    if (!overrap || !authDone) {
+      toast.error('이메일 인증을 해주세요', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1000,
+        hideProgressBar: true,
+      });
+    } else if (getValues('password') !== getValues('passwordCheck')) {
+      toast.error('비밀번호를 체크해주세요', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1000,
+        hideProgressBar: true,
+      });
     } else {
-      const formData = new FormData();
-      formData.append('email', data.email);
-      formData.append('password', data.password);
-      formData.append('nickname', data.nickname);
+      if (avatarPath) {
+        const formData = new FormData();
+        formData.append('email', data.email);
+        formData.append('password', data.password);
+        formData.append('nickname', data.nickname);
+        formData.append('avatar', avatarPath);
+        dispatch(signUp(formData)).then(() => {
+          navigation('/login', { replace: true });
+        });
+      } else {
+        const formData = new FormData();
+        formData.append('email', data.email);
+        formData.append('password', data.password);
+        formData.append('nickname', data.nickname);
+        dispatch(signUp(formData)).then(() => {
+          navigation('/login', { replace: true });
+        });
+      }
     }
   };
 
