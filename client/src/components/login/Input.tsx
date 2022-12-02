@@ -5,6 +5,7 @@ import { emailAuth, emailOverrap } from '../../action/user';
 import { RootState, useAppDispatch } from '../../store/store';
 import { useSelector } from 'react-redux';
 import { setAuth } from '../../reducer/user';
+import { toast } from 'react-toastify';
 
 const InputItem = styled.input`
   padding: 10px 5px;
@@ -87,15 +88,24 @@ function Input({
     (state: RootState) => state.user,
   );
   const dispatch = useAppDispatch();
+
   const onClickOverrap = () => {
     const email = getValues!('email');
     const emailRegEx =
       /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
     if (!email) {
-      alert('이메일을 입력해주세요');
+      toast.error('이메일을 입력해주세요', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1000,
+        hideProgressBar: true,
+      });
     } else {
       if (email.match(emailRegEx) === null) {
-        alert('올바른 이메일 형식이 아닙니다.');
+        toast.error('올바른 이메일 형식이 아닙니다', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1000,
+          hideProgressBar: true,
+        });
       } else {
         dispatch(emailOverrap({ email: email }));
       }
@@ -106,17 +116,29 @@ function Input({
       return;
     }
     if (overrap === null) {
-      alert('이메일 중복체크를 해주세요');
+      toast.error('이메일 중복 체크를 해주세요', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1000,
+        hideProgressBar: true,
+      });
       return;
     } else {
       const email = getValues!('email');
       const emailRegEx =
         /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
       if (!email) {
-        alert('이메일을 입력해주세요');
+        toast.error('이메일을 입력해주세요', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1000,
+          hideProgressBar: true,
+        });
       } else {
         if (email.match(emailRegEx) === null) {
-          alert('올바른 이메일 형식이 아닙니다.');
+          toast.error('올바른 이메일 형식이 아닙니다', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 1000,
+            hideProgressBar: true,
+          });
         } else {
           dispatch(emailAuth({ email: email }));
         }
@@ -130,7 +152,11 @@ function Input({
       if (parseInt(authInput) === authNumber) {
         dispatch(setAuth());
       } else {
-        alert('인증번호를 다시 확인해주세요');
+        toast.error('인증번호를 다시 확인 해주세요', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1000,
+          hideProgressBar: true,
+        });
       }
     }
   };
