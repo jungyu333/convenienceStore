@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 import { emailAuth, emailOverrap } from '../action/user';
 
 interface userState {
@@ -56,7 +57,11 @@ const userSlice = createSlice({
         state.emailAuthLoading = false;
         state.emailAuthDone = true;
         state.authNumber = action.payload;
-        alert('메일로 보내진 인증번호를 입력해주세요');
+        toast.success('메일로 보내진 인증번호를 확인하세요.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1000,
+          hideProgressBar: true,
+        });
       })
       .addCase(emailAuth.rejected, (state, action) => {
         state.emailAuthLoading = false;
@@ -72,8 +77,16 @@ const userSlice = createSlice({
         state.emailOverrapDone = true;
         state.overrap = action.payload;
         state.overrap
-          ? alert('사용가능한 이메일 입니다')
-          : alert('중복된 이메일 입니다');
+          ? toast.success('사용가능한 이메일 입니다.', {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 1000,
+              hideProgressBar: true,
+            })
+          : toast.error('중복된 이메일 입니다.', {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 1000,
+              hideProgressBar: true,
+            });
       })
       .addCase(emailOverrap.rejected, (state, action) => {
         state.emailOverrapLoading = false;
