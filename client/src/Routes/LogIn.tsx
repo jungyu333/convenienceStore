@@ -1,11 +1,14 @@
 import { Container } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ILogInData } from '../@types/login';
 import SubmitButton from '../components/common/SubmitButton';
 import Input from '../components/login/Input';
+import { resetAuth, resetAvatar } from '../reducer/user';
+import { RootState, useAppDispatch } from '../store/store';
 
 const Wrapper = styled(Container)`
   background-color: ${({ theme }) => theme.colors.gray};
@@ -77,6 +80,8 @@ const BottomButtonContainer = styled.div`
 `;
 
 function LogIn() {
+  const { authDone } = useSelector((state: RootState) => state.user);
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -85,6 +90,12 @@ function LogIn() {
   const onLogInSubmit = (data: ILogInData) => {
     console.log(data);
   };
+  useEffect(() => {
+    if (authDone) {
+      dispatch(resetAuth());
+    }
+    dispatch(resetAvatar());
+  }, [dispatch, authDone]);
   return (
     <Wrapper>
       <LogInForm onSubmit={handleSubmit(onLogInSubmit)}>

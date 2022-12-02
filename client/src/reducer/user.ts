@@ -1,10 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
+import { uploadAvatar } from '../action/signUp';
 import { emailAuth, emailOverrap } from '../action/user';
 
 interface userState {
-  avatarFile: string | null;
   avatarPath: string | null;
+  uploadAvatarLoading: boolean;
+  uploadAvatarDone: boolean;
+  uploadAvatarError: string | null;
   emailAuthLoading: boolean;
   emailAuthDone: boolean;
   emailAuthError: string | null;
@@ -17,8 +20,10 @@ interface userState {
 }
 
 export const initialState: userState = {
-  avatarFile: null,
   avatarPath: null,
+  uploadAvatarLoading: false,
+  uploadAvatarDone: false,
+  uploadAvatarError: null,
   emailAuthLoading: false,
   emailAuthDone: false,
   emailAuthError: null,
@@ -34,16 +39,14 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setAvatar: (state, action) => {
-      state.avatarFile = action.payload.file;
-      state.avatarPath = action.payload.path;
-    },
     resetAvatar: state => {
-      state.avatarFile = null;
       state.avatarPath = null;
     },
     setAuth: state => {
       state.authDone = true;
+    },
+    resetAuth: state => {
+      state.authDone = false;
     },
   },
   extraReducers: builder => {
@@ -76,25 +79,38 @@ const userSlice = createSlice({
         state.emailAuthLoading = false;
         state.emailOverrapDone = true;
         state.overrap = action.payload;
-        state.overrap
-          ? toast.success('사용가능한 이메일 입니다.', {
-              position: toast.POSITION.TOP_CENTER,
-              autoClose: 1000,
-              hideProgressBar: true,
-            })
-          : toast.error('중복된 이메일 입니다.', {
-              position: toast.POSITION.TOP_CENTER,
-              autoClose: 1000,
-              hideProgressBar: true,
-            });
+        toast.success('사용가능한 이메일 입니다.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1000,
+          hideProgressBar: true,
+        });
       })
       .addCase(emailOverrap.rejected, (state, action) => {
         state.emailOverrapLoading = false;
         state.emailOverrapDone = false;
         state.emailOverrapError = action.payload as string;
+        toast.error('중복된 이메일 입니다.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1000,
+          hideProgressBar: true,
+        });
+      })
+      .addCase(uploadAvatar.pending, state => {
+        state.uploadAvatarLoading = true;
+        state.uploadAvatarDone = false;
+      })
+      .addCase(uploadAvatar.fulfilled, (state, action) => {
+        state.uploadAvatarLoading = false;
+        state.uploadAvatarDone = true;
+        state.avatarPath = action.payload;
+      })
+      .addCase(uploadAvatar.rejected, (state, action) => {
+        state.uploadAvatarLoading = false;
+        state.uploadAvatarDone = false;
+        state.uploadAvatarError = action.payload as string;
       });
   },
 });
 
-export const { setAvatar, resetAvatar, setAuth } = userSlice.actions;
+export const { resetAvatar, setAuth, resetAuth } = userSlice.actions;
 export default userSlice;

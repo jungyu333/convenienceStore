@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { AppDataSource } from './data-source';
 import cors from 'cors';
 import userRouter from './routes/user';
+import signUpRouter from './routes/signUp';
 
 dotenv.config();
 
@@ -17,8 +18,9 @@ app.use(
     credentials: true,
   }),
 );
-
+app.use('/', express.static('avatarupload'));
 app.use('/api/user', userRouter);
+app.use('/api/signUp', signUpRouter);
 
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
   res.send('welcome!');

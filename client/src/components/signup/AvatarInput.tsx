@@ -2,7 +2,8 @@ import { Avatar } from '@mui/material';
 import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { resetAvatar, setAvatar } from '../../reducer/user';
+import { uploadAvatar } from '../../action/signUp';
+import { resetAvatar } from '../../reducer/user';
 import { RootState, useAppDispatch } from '../../store/store';
 
 const AvatarContainer = styled.div`
@@ -35,19 +36,18 @@ const AvatarButton = styled.div`
 function AvatarInput() {
   const dispatch = useAppDispatch();
   const avatarInput = useRef<HTMLInputElement>(null);
-  const { avatarFile } = useSelector((state: RootState) => state.user);
+  const { avatarPath } = useSelector((state: RootState) => state.user);
   const onClickAvatarUpload = () => {
     avatarInput.current?.click();
   };
 
-  const onChangeImage = () => {
-    if (avatarInput.current?.files) {
-      const file = avatarInput.current.files[0];
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        dispatch(setAvatar({ file: reader.result, path: file.name }));
-      };
+  const onChangeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const file = event.target.files[0];
+      const avatarFormData = new FormData();
+      avatarFormData.append('avatar', file);
+      dispatch(uploadAvatar(avatarFormData));
+      event.target.value = '';
     }
   };
 
@@ -58,10 +58,12 @@ function AvatarInput() {
     <AvatarContainer>
       <CustomAvatar
         src={
-          avatarFile ? avatarFile : 'https://www.gravatar.com/avatar?d=mp&f=y'
+          avatarPath
+            ? `${process.env.REACT_APP_SERVER_URL}/${avatarPath}`
+            : 'https://www.gravatar.com/avatar?d=mp&f=y'
         }
       />
-      {avatarFile ? (
+      {avatarPath ? (
         <AvatarButton onClick={resetAvatars}>Reset</AvatarButton>
       ) : (
         <AvatarButton onClick={onClickAvatarUpload}>Image</AvatarButton>
