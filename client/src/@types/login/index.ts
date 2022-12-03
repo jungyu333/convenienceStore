@@ -19,3 +19,13 @@ export interface ILogInData {
   email: string;
   password: string;
 }
+
+export interface IMyInfo {
+  id: number;
+  email: string;
+  nickname: string;
+  avatarUrn: string;
+  avatarUrl: string;
+  provider: string;
+  role: number;
+}

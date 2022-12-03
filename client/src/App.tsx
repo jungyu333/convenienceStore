@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
+axios.defaults.withCredentials = true;
 
 function App() {
   return (

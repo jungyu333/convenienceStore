@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+//회원가입
 export const signUp = createAsyncThunk<any, FormData>(
   'singUp',
   async (data, thunkApi) => {
@@ -18,6 +19,7 @@ export const signUp = createAsyncThunk<any, FormData>(
   },
 );
 
+//아바타 업로드
 export const uploadAvatar = createAsyncThunk<string, FormData>(
   'uploadAvatar',
   async (data, thunkApi) => {
