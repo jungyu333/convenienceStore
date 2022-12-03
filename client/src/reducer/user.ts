@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
+import { IMyInfo } from '../@types/login';
 import { uploadAvatar } from '../action/signUp';
-import { emailAuth, emailOverrap } from '../action/user';
+import { emailAuth, emailOverrap, userLogIn } from '../action/user';
 
 interface userState {
   avatarPath: string | null;
@@ -17,6 +18,10 @@ interface userState {
   emailOverrapError: string | null;
   overrap: boolean | null;
   authDone: boolean;
+  loginLoading: boolean;
+  loginDone: boolean;
+  loginError: string | null;
+  me: IMyInfo | null;
 }
 
 export const initialState: userState = {
@@ -33,6 +38,10 @@ export const initialState: userState = {
   overrap: null,
   authNumber: null,
   authDone: false,
+  loginLoading: false,
+  loginDone: false,
+  loginError: null,
+  me: null,
 };
 
 const userSlice = createSlice({
@@ -108,6 +117,25 @@ const userSlice = createSlice({
         state.uploadAvatarLoading = false;
         state.uploadAvatarDone = false;
         state.uploadAvatarError = action.payload as string;
+      })
+      .addCase(userLogIn.pending, state => {
+        state.loginLoading = true;
+        state.loginDone = false;
+      })
+      .addCase(userLogIn.fulfilled, (state, action) => {
+        state.loginLoading = false;
+        state.loginDone = true;
+        state.me = action.payload;
+      })
+      .addCase(userLogIn.rejected, (state, action) => {
+        state.loginLoading = false;
+        state.loginDone = false;
+        state.loginError = action.payload as string;
+        toast.error(action.payload as string, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1000,
+          hideProgressBar: true,
+        });
       });
   },
 });

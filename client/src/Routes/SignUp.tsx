@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { ISignUpData } from '../@types/signup';
 import { signUp } from '../action/signUp';
 import SubmitButton from '../components/common/SubmitButton';
-import Input from '../components/login/Input';
+import Input from '../components/common/Input';
 import AvatarInput from '../components/signup/AvatarInput';
 import { RootState, useAppDispatch } from '../store/store';
 

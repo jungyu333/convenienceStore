@@ -2,13 +2,15 @@ import { Container } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ILogInData } from '../@types/login';
 import SubmitButton from '../components/common/SubmitButton';
-import Input from '../components/login/Input';
+import Input from '../components/common/Input';
 import { resetAuth, resetAvatar } from '../reducer/user';
 import { RootState, useAppDispatch } from '../store/store';
+import { toast } from 'react-toastify';
+import { userLogIn } from '../action/user';
 
 const Wrapper = styled(Container)`
   background-color: ${({ theme }) => theme.colors.gray};
@@ -80,15 +82,33 @@ const BottomButtonContainer = styled.div`
 `;
 
 function LogIn() {
-  const { authDone } = useSelector((state: RootState) => state.user);
+  const navigation = useNavigate();
+  const { authDone, loginDone } = useSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<ILogInData>();
   const onLogInSubmit = (data: ILogInData) => {
-    console.log(data);
+    const email = getValues!('email');
+    const emailRegEx =
+      /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
+    if (email.match(emailRegEx) === null) {
+      toast.error('올바른 이메일 형식이 아닙니다', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1000,
+        hideProgressBar: true,
+      });
+    } else {
+      dispatch(
+        userLogIn({
+          email: data.email,
+          password: data.password,
+        }),
+      );
+    }
   };
   useEffect(() => {
     if (authDone) {
@@ -96,6 +116,11 @@ function LogIn() {
     }
     dispatch(resetAvatar());
   }, [dispatch, authDone]);
+  useEffect(() => {
+    if (loginDone) {
+      navigation('/', { replace: true });
+    }
+  }, [navigation, loginDone]);
   return (
     <Wrapper>
       <LogInForm onSubmit={handleSubmit(onLogInSubmit)}>
