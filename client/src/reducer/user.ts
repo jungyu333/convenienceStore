@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { IMyInfo } from '../@types/login';
 import { uploadAvatar } from '../action/signUp';
-import { emailAuth, emailOverrap, userLogIn } from '../action/user';
+import { emailAuth, emailOverrap, loadMyInfo, userLogIn } from '../action/user';
 
 interface userState {
   avatarPath: string | null;
@@ -136,7 +136,12 @@ const userSlice = createSlice({
           autoClose: 1000,
           hideProgressBar: true,
         });
-      });
+      })
+      .addCase(loadMyInfo.pending, state => {})
+      .addCase(loadMyInfo.fulfilled, (state, action) => {
+        state.me = action.payload;
+      })
+      .addCase(loadMyInfo.rejected, state => {});
   },
 });
 

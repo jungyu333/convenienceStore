@@ -48,3 +48,16 @@ export const userLogIn = createAsyncThunk<IMyInfo, ILogInData>(
     }
   },
 );
+
+//myinfo load
+export const loadMyInfo = createAsyncThunk<IMyInfo>(
+  'user/myinfo',
+  async (data, thunkApi) => {
+    try {
+      const response = await axios.get('/api/user');
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data);
+    }
+  },
+);
