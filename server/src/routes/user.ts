@@ -6,6 +6,33 @@ import randomNumber from '../util/randomNumber';
 
 const router = express.Router();
 
+//load myinfo
+router.get('/', async (req, res, next) => {
+  try {
+    if (req.user) {
+      const user = await User.findOne({
+        where: {
+          id: req.user?.id,
+        },
+        select: {
+          id: true,
+          nickname: true,
+          avatarUrn: true,
+          role: true,
+          provider: true,
+        },
+      });
+
+      return res.status(200).json(user);
+    } else {
+      return res.status(200).json(null);
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 //email 인증번호
 router.post('/auth', async (req, res, next) => {
   try {
