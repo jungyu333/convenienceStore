@@ -10,7 +10,10 @@ import {
   Tooltip,
 } from '@mui/material';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import { RootState } from '../../store/store';
 
 const Wrapper = styled(AppBar)`
   width: 100%;
@@ -26,7 +29,9 @@ const CustomContainer = styled(Container)`
 const CustomToolbar = styled(Toolbar)`
   width: 100%;
   display: flex;
+  padding: 0;
   justify-content: space-between;
+  align-items: center;
   & h1 {
     font-size: 1.5rem;
     color: white;
@@ -40,6 +45,9 @@ const CustomMenu = styled(Menu)`
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Layout() {
+  const { pathname } = useLocation();
+
+  const { me } = useSelector((state: RootState) => state.user);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleOpenUserMenu = () => {
@@ -57,11 +65,20 @@ function Layout() {
           <h1>Logo</h1>
 
           <Box>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+            {pathname === '/login' || pathname === '/signup' ? null : (
+              <>
+                {me ? (
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu}>
+                      <Avatar src={me?.avatarUrl} />
+                    </IconButton>
+                  </Tooltip>
+                ) : (
+                  <Link to="/login">Log In</Link>
+                )}
+              </>
+            )}
+
             <CustomMenu
               anchorOrigin={{
                 vertical: 'top',
