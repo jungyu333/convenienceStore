@@ -2,6 +2,7 @@ import express from 'express';
 import User from '../entities/User';
 import fs from 'fs';
 import multer from 'multer';
+import { isNotLoggedIn } from './middleware';
 
 const router = express.Router();
 
@@ -28,6 +29,7 @@ const uploadAvatar = multer({
 router.post(
   '/avatar',
   uploadAvatar.single('avatar'),
+  isNotLoggedIn,
   async (req, res, next) => {
     try {
       if (req.file) {
@@ -41,7 +43,7 @@ router.post(
 );
 
 // 회원가입
-router.post('/', uploadAvatar.none(), async (req, res, next) => {
+router.post('/', uploadAvatar.none(), isNotLoggedIn, async (req, res, next) => {
   try {
     const email = req.body.email;
     const nickname = req.body.nickname;

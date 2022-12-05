@@ -3,6 +3,7 @@ import passport from 'passport';
 import User from '../entities/User';
 import sendMail from '../nodemailer/index';
 import randomNumber from '../util/randomNumber';
+import { isLoggedIn, isNotLoggedIn } from './middleware';
 
 const router = express.Router();
 
@@ -34,7 +35,7 @@ router.get('/', async (req, res, next) => {
 });
 
 //email 인증번호
-router.post('/auth', async (req, res, next) => {
+router.post('/auth', isNotLoggedIn, async (req, res, next) => {
   try {
     const email = req.body.email;
     const number = randomNumber();
@@ -52,7 +53,7 @@ router.post('/auth', async (req, res, next) => {
 });
 
 //email 중복체크
-router.post('/overrap', async (req, res, next) => {
+router.post('/overrap', isNotLoggedIn, async (req, res, next) => {
   try {
     const email = req.body.email;
 
@@ -73,7 +74,7 @@ router.post('/overrap', async (req, res, next) => {
 });
 
 //login
-router.post('/login', (req, res, next) => {
+router.post('/login', isNotLoggedIn, (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) {
       return next(err);
@@ -101,7 +102,7 @@ router.post('/login', (req, res, next) => {
 });
 
 //logout
-router.post('/logout', async (req, res, next) => {
+router.post('/logout', isLoggedIn, async (req, res, next) => {
   req.logout(err => {
     if (err) {
       return next(err);
