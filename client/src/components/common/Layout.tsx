@@ -73,6 +73,7 @@ function Layout() {
 
             <DropdownMenu
               anchorElUser={anchorElUser}
+              setAnchorElUser={setAnchorElUser}
               handleCloseUserMenu={handleCloseUserMenu}
             />
           </div>

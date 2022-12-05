@@ -1,6 +1,9 @@
 import { Menu, MenuItem } from '@mui/material';
 import React from 'react';
 import styled from 'styled-components';
+import { IDropdownMenuProps } from '../../@types/common';
+import { userLogOut } from '../../action/user';
+import { useAppDispatch } from '../../store/store';
 
 const Wrapper = styled(Menu)`
   margin-top: 45px;
@@ -10,15 +13,16 @@ const CustomMenuItem = styled(MenuItem)`
   min-width: 150px;
 `;
 
-interface IDropdownMenuProps {
-  handleCloseUserMenu: (event: React.MouseEvent<HTMLElement>) => void;
-  anchorElUser: null | HTMLElement;
-}
-
 function DropdownMenu({
   handleCloseUserMenu,
+  setAnchorElUser,
   anchorElUser,
 }: IDropdownMenuProps) {
+  const dispatch = useAppDispatch();
+  const onClickLogOut = () => {
+    setAnchorElUser(null);
+    dispatch(userLogOut());
+  };
   return (
     <Wrapper
       anchorEl={anchorElUser}
@@ -40,7 +44,7 @@ function DropdownMenu({
       <CustomMenuItem onClick={handleCloseUserMenu}>
         <div>Cart</div>
       </CustomMenuItem>
-      <CustomMenuItem onClick={handleCloseUserMenu}>
+      <CustomMenuItem onClick={onClickLogOut}>
         <div>LogOut</div>
       </CustomMenuItem>
     </Wrapper>
