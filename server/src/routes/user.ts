@@ -72,6 +72,7 @@ router.post('/overrap', async (req, res, next) => {
   }
 });
 
+//login
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) {
@@ -97,6 +98,24 @@ router.post('/login', (req, res, next) => {
       return res.status(200).json(userWithOutPassword);
     });
   })(req, res, next);
+});
+
+//logout
+router.post('/logout', async (req, res, next) => {
+  req.logout(err => {
+    if (err) {
+      return next(err);
+    }
+
+    if (req.session) {
+      req.session.destroy(err => {
+        res.clearCookie('convenience');
+        res.status(200).send('ok');
+      });
+    } else {
+      res.status(200).send('ok');
+    }
+  });
 });
 
 export default router;

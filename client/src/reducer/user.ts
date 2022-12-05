@@ -2,7 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { IMyInfo } from '../@types/login';
 import { uploadAvatar } from '../action/signUp';
-import { emailAuth, emailOverrap, loadMyInfo, userLogIn } from '../action/user';
+import {
+  emailAuth,
+  emailOverrap,
+  loadMyInfo,
+  userLogIn,
+  userLogOut,
+} from '../action/user';
 
 interface userState {
   avatarPath: string | null;
@@ -21,6 +27,8 @@ interface userState {
   loginLoading: boolean;
   loginDone: boolean;
   loginError: string | null;
+  logoutDone: boolean;
+  logoutError: string | null;
   me: IMyInfo | null;
 }
 
@@ -41,6 +49,8 @@ export const initialState: userState = {
   loginLoading: false,
   loginDone: false,
   loginError: null,
+  logoutDone: false,
+  logoutError: null,
   me: null,
 };
 
@@ -141,7 +151,18 @@ const userSlice = createSlice({
       .addCase(loadMyInfo.fulfilled, (state, action) => {
         state.me = action.payload;
       })
-      .addCase(loadMyInfo.rejected, state => {});
+      .addCase(loadMyInfo.rejected, state => {})
+      .addCase(userLogOut.pending, state => {
+        state.logoutDone = false;
+      })
+      .addCase(userLogOut.fulfilled, state => {
+        state.logoutDone = true;
+        state.me = null;
+        state.loginDone = false;
+      })
+      .addCase(userLogOut.rejected, (state, action) => {
+        state.logoutError = action.payload as string;
+      });
   },
 });
 

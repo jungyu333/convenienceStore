@@ -49,6 +49,19 @@ export const userLogIn = createAsyncThunk<IMyInfo, ILogInData>(
   },
 );
 
+//logout
+export const userLogOut = createAsyncThunk(
+  'user/logout',
+  async (data, thunkApi) => {
+    try {
+      const response = await axios.post('/api/user/logout');
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data);
+    }
+  },
+);
+
 //myinfo load
 export const loadMyInfo = createAsyncThunk<IMyInfo>(
   'user/myinfo',
