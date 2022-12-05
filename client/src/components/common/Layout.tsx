@@ -1,11 +1,8 @@
 import {
   AppBar,
   Avatar,
-  Box,
   Container,
   IconButton,
-  Menu,
-  MenuItem,
   Toolbar,
   Tooltip,
 } from '@mui/material';
@@ -14,9 +11,11 @@ import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { RootState } from '../../store/store';
+import DropdownMenu from './DropdownMenu';
 
 const Wrapper = styled(AppBar)`
   width: 100%;
+
   background-color: ${({ theme }) => theme.colors.orange};
 `;
 
@@ -30,6 +29,7 @@ const CustomToolbar = styled(Toolbar)`
   width: 100%;
   display: flex;
   padding: 0;
+
   justify-content: space-between;
   align-items: center;
   & h1 {
@@ -38,24 +38,16 @@ const CustomToolbar = styled(Toolbar)`
   }
 `;
 
-const CustomMenu = styled(Menu)`
-  margin-top: 45px;
-`;
-
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
 function Layout() {
   const { pathname } = useLocation();
-
   const { me } = useSelector((state: RootState) => state.user);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const handleOpenUserMenu = () => {
-    setIsOpen(true);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseUserMenu = () => {
-    setIsOpen(false);
+    setAnchorElUser(null);
   };
 
   return (
@@ -64,11 +56,11 @@ function Layout() {
         <CustomToolbar>
           <h1>Logo</h1>
 
-          <Box>
+          <div>
             {pathname === '/login' || pathname === '/signup' ? null : (
               <>
                 {me ? (
-                  <Tooltip title="Open settings">
+                  <Tooltip title="Open Menu">
                     <IconButton onClick={handleOpenUserMenu}>
                       <Avatar src={me?.avatarUrl} />
                     </IconButton>
@@ -79,26 +71,11 @@ function Layout() {
               </>
             )}
 
-            <CustomMenu
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(isOpen)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map(setting => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <div>{setting}</div>
-                </MenuItem>
-              ))}
-            </CustomMenu>
-          </Box>
+            <DropdownMenu
+              anchorElUser={anchorElUser}
+              handleCloseUserMenu={handleCloseUserMenu}
+            />
+          </div>
         </CustomToolbar>
       </CustomContainer>
     </Wrapper>
