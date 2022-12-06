@@ -21,6 +21,7 @@ router.get('/', async (req, res, next) => {
           avatarUrn: true,
           role: true,
           provider: true,
+          email: true,
         },
       });
 
