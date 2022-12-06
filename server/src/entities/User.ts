@@ -1,8 +1,9 @@
 import { IsEmail, Length } from 'class-validator';
 import bcrypt from 'bcryptjs';
 import BaseEntity from './Entity';
-import { BeforeInsert, Column, Entity, Index } from 'typeorm';
+import { BeforeInsert, Column, Entity, Index, OneToMany } from 'typeorm';
 import { Expose } from 'class-transformer';
+import Product from './Product';
 
 @Entity('users')
 export default class User extends BaseEntity {
@@ -39,6 +40,9 @@ export default class User extends BaseEntity {
       return 'https://www.gravatar.com/avatar?d=mp&f=y';
     }
   }
+
+  @OneToMany(() => Product, product => product.writer, { cascade: true })
+  products: Product[];
 
   @BeforeInsert()
   async hashPassword() {
