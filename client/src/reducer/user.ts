@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import { IMyInfo } from '../@types/login';
 import { uploadAvatar } from '../action/signUp';
 import {
+  adminLogIn,
   emailAuth,
   emailOverrap,
   loadMyInfo,
@@ -132,7 +133,16 @@ const userSlice = createSlice({
         state.loginLoading = true;
         state.loginDone = false;
       })
+      .addCase(adminLogIn.pending, state => {
+        state.loginLoading = true;
+        state.loginDone = false;
+      })
       .addCase(userLogIn.fulfilled, (state, action) => {
+        state.loginLoading = false;
+        state.loginDone = true;
+        state.me = action.payload;
+      })
+      .addCase(adminLogIn.fulfilled, (state, action) => {
         state.loginLoading = false;
         state.loginDone = true;
         state.me = action.payload;
@@ -147,6 +157,17 @@ const userSlice = createSlice({
           hideProgressBar: true,
         });
       })
+      .addCase(adminLogIn.rejected, (state, action) => {
+        state.loginLoading = false;
+        state.loginDone = false;
+        state.loginError = action.payload as string;
+        toast.error(action.payload as string, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1000,
+          hideProgressBar: true,
+        });
+      })
+
       .addCase(loadMyInfo.pending, state => {})
       .addCase(loadMyInfo.fulfilled, (state, action) => {
         state.me = action.payload;

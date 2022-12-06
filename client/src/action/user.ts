@@ -74,3 +74,19 @@ export const loadMyInfo = createAsyncThunk<IMyInfo>(
     }
   },
 );
+
+//admin login
+export const adminLogIn = createAsyncThunk<IMyInfo, ILogInData>(
+  'admin/login',
+  async (data, thunkApi) => {
+    try {
+      const response = await axios.post('/api/user/admin', {
+        email: data.email,
+        password: data.password,
+      });
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data);
+    }
+  },
+);

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { resetAuth, resetAvatar } from '../reducer/user';
-import { RootState, useAppDispatch } from '../store/store';
-import LogInForm from '../components/login/LogInForm';
+import LogInForm from '../../components/login/LogInForm';
+import { resetAuth, resetAvatar } from '../../reducer/user';
+import { RootState, useAppDispatch } from '../../store/store';
 
-function LogIn() {
+function AdminLogIn() {
   const navigation = useNavigate();
   const { authDone, loginDone } = useSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
@@ -22,9 +22,9 @@ function LogIn() {
   }, [navigation, loginDone]);
   return (
     <>
-      <LogInForm headerText="with your account" />
+      <LogInForm isAdmin headerText="with admin account" />
     </>
   );
 }
 
-export default LogIn;
+export default AdminLogIn;

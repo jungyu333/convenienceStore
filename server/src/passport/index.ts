@@ -1,5 +1,6 @@
 import passport from 'passport';
 import User from '../entities/User';
+import admin from './admin';
 import local from './local';
 
 export default () => {
@@ -19,4 +20,5 @@ export default () => {
     }
   });
   local();
+  admin();
 };

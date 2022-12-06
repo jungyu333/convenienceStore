@@ -28,4 +28,5 @@ export interface IMyInfo {
   avatarUrl: string;
   provider: string;
   role: number;
+  products?: any;
 }

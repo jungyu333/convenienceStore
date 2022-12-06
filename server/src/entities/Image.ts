@@ -1,5 +1,6 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import Product from './Product';
+import BaseEntity from './Entity';
 
 @Entity('images')
 export default class Image extends BaseEntity {

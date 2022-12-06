@@ -4,6 +4,7 @@ import Home from './Routes/Home';
 import LogIn from './Routes/LogIn';
 import Profile from './Routes/Profile';
 import SignUp from './Routes/SignUp';
+import AdminLogIn from './Routes/admin/AdminLogIn';
 
 function Router() {
   return (
@@ -12,6 +13,7 @@ function Router() {
       <Route path="/login" element={<LogIn />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/login/admin" element={<AdminLogIn />} />
     </Routes>
   );
 }

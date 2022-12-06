@@ -1,14 +1,8 @@
 import { Length } from 'class-validator';
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import Image from './Image';
 import User from './User';
+import BaseEntity from './Entity';
 
 @Entity('products')
 export default class Product extends BaseEntity {
