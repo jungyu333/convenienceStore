@@ -1,5 +1,6 @@
 import { Menu, MenuItem } from '@mui/material';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { IDropdownMenuProps } from '../../@types/common';
 import { userLogOut } from '../../action/user';
@@ -39,7 +40,7 @@ function DropdownMenu({
       onClose={handleCloseUserMenu}
     >
       <CustomMenuItem onClick={handleCloseUserMenu}>
-        <div>Profile</div>
+        <Link to="/profile">Profile</Link>
       </CustomMenuItem>
       <CustomMenuItem onClick={handleCloseUserMenu}>
         <div>Cart</div>
