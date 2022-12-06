@@ -1,6 +1,9 @@
 import { Avatar, Container } from '@mui/material';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { RootState } from '../store/store';
 
 const Wrapper = styled(Container)`
   margin-top: 15rem;
@@ -20,6 +23,7 @@ const Header = styled.div`
   margin: 40px 0;
   font-size: 1.8rem;
   & span {
+    margin-right: 5px;
     color: ${({ theme }) => theme.colors.orange};
   }
 `;
@@ -51,28 +55,39 @@ const InfoItem = styled.div`
     font-size: 0.9rem;
     color: ${({ theme }) => theme.colors.gray};
   }
+  & span {
+    font-size: 0.9rem;
+    color: ${({ theme }) => theme.colors.gray};
+    :hover {
+      color: ${({ theme }) => theme.colors.orange};
+    }
+  }
 `;
 
 function Profile() {
+  const { me } = useSelector((state: RootState) => state.user);
+
   return (
     <Wrapper>
-      <CustomAvatar src="/static/images/avatar/3.jpg" />
+      <CustomAvatar src={me?.avatarUrl} />
       <Header>
-        <span>nickname</span>
+        <span>{me?.nickname}</span>
         <p>님 어서오세요</p>
       </Header>
       <InfoContainer>
         <InfoItem>
           <div>Email ID</div>
-          <div>email</div>
+          <div>{me?.email}</div>
         </InfoItem>
         <InfoItem>
           <div>Nick Name</div>
-          <div>nickname</div>
+          <div>{me?.nickname}</div>
         </InfoItem>
         <InfoItem>
           <div>Cart</div>
-          <div>go!</div>
+          <Link to="/">
+            <span>go!</span>
+          </Link>
         </InfoItem>
       </InfoContainer>
     </Wrapper>
