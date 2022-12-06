@@ -54,7 +54,9 @@ function Layout() {
     <Wrapper>
       <CustomContainer>
         <CustomToolbar>
-          <h1>Logo</h1>
+          <Link to="/">
+            <h1>Logo</h1>
+          </Link>
 
           <div>
             {pathname === '/login' || pathname === '/signup' ? null : (
