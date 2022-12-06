@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { ILogInData } from '../../@types/login';
-import { userLogIn } from '../../action/user';
+import { adminLogIn, userLogIn } from '../../action/user';
 import { useAppDispatch } from '../../store/store';
 import Input from '../common/Input';
 import SubmitButton from '../common/SubmitButton';
@@ -103,12 +103,21 @@ function LogInForm({ isAdmin, headerText }: ILogInFormProps) {
         hideProgressBar: true,
       });
     } else {
-      dispatch(
-        userLogIn({
-          email: data.email,
-          password: data.password,
-        }),
-      );
+      if (!isAdmin) {
+        dispatch(
+          userLogIn({
+            email: data.email,
+            password: data.password,
+          }),
+        );
+      } else {
+        dispatch(
+          adminLogIn({
+            email: data.email,
+            password: data.password,
+          }),
+        );
+      }
     }
   };
   return (

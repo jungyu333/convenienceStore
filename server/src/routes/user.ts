@@ -120,4 +120,38 @@ router.post('/logout', isLoggedIn, async (req, res, next) => {
   });
 });
 
+//admin login
+router.post('/admin', isNotLoggedIn, (req, res, next) => {
+  passport.authenticate('admin', (err, user, info) => {
+    if (err) {
+      console.error(err);
+      return next(err);
+    }
+    if (info) {
+      return res.status(401).send(info.message);
+    }
+    return req.login(user, async loginErr => {
+      if (loginErr) {
+        console.error(loginErr);
+        return next(loginErr);
+      }
+      const userWithoutPassword = await User.findOne({
+        where: { id: req.user?.id },
+        relations: ['products'],
+        select: {
+          id: true,
+          nickname: true,
+          avatarUrn: true,
+          email: true,
+          role: true,
+          products: true,
+          provider: true,
+        },
+      });
+
+      return res.status(200).json(userWithoutPassword);
+    });
+  })(req, res, next);
+});
+
 export default router;
