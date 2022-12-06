@@ -59,7 +59,7 @@ function Layout() {
           </Link>
 
           <div>
-            {pathname === '/login' || pathname === '/signup' ? null : (
+            {pathname.includes('/login') || pathname === '/signup' ? null : (
               <>
                 {me ? (
                   <Tooltip title="Open Menu">
