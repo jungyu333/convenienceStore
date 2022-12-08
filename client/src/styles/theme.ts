@@ -6,6 +6,9 @@ const colors = {
   lightgray: '#d9d4d4',
   red: '#d60202',
   green: '#55ab4f',
+  darkOrange: '#d48c59',
+  white: '#ffffff',
+  black: '#000000',
 };
 
 const deviceSizes = {
