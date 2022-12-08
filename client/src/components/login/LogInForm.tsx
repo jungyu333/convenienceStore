@@ -152,7 +152,7 @@ function LogInForm({ isAdmin, headerText }: ILogInFormProps) {
         </LogInInputContainer>
         <BottomButtonContainer>
           {!isAdmin ? (
-            <Link to="/login/admin">관리자 계정으로 로그인</Link>
+            <Link to="/admin/login">관리자 계정으로 로그인</Link>
           ) : null}
           <Link to={'/signup'}>계정이 없으신가요?</Link>
         </BottomButtonContainer>

@@ -5,6 +5,7 @@ import LogIn from './Routes/LogIn';
 import Profile from './Routes/Profile';
 import SignUp from './Routes/SignUp';
 import AdminLogIn from './Routes/admin/AdminLogIn';
+import UpLoad from './Routes/admin/UpLoad';
 
 function Router() {
   return (
@@ -13,7 +14,8 @@ function Router() {
       <Route path="/login" element={<LogIn />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/profile" element={<Profile />} />
-      <Route path="/login/admin" element={<AdminLogIn />} />
+      <Route path="/admin/upload" element={<UpLoad />} />
+      <Route path="/admin/login" element={<AdminLogIn />} />
     </Routes>
   );
 }
