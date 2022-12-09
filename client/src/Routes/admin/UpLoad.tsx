@@ -1,11 +1,11 @@
 import React from 'react';
-import { Container, Table, TableContainer } from '@mui/material';
+import { Container, TableContainer } from '@mui/material';
 import styled from 'styled-components';
 import TableHeader from '../../components/upload/TableHeader';
 import TableRow from '../../components/upload/TableRow';
 
 const Wrapper = styled(Container)`
-  margin-top: 15rem;
+  margin-top: 10rem;
 `;
 
 const CustomTableContainer = styled(TableContainer)`
@@ -17,10 +17,8 @@ function UpLoad() {
   return (
     <Wrapper>
       <CustomTableContainer>
-        <Table>
-          <TableHeader />
-          <TableRow />
-        </Table>
+        <TableHeader />
+        <TableRow />
       </CustomTableContainer>
     </Wrapper>
   );
