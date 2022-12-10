@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
-import { ILogInData } from '../../@types/login';
+import { ILogInData, ILogInFormProps } from '../../@types/login';
 import { adminLogIn, userLogIn } from '../../action/user';
 import { useAppDispatch } from '../../store/store';
 import Input from '../common/Input';
@@ -78,11 +78,6 @@ const BottomButtonContainer = styled.div`
     }
   }
 `;
-
-interface ILogInFormProps {
-  isAdmin?: boolean;
-  headerText: string;
-}
 
 function LogInForm({ isAdmin, headerText }: ILogInFormProps) {
   const dispatch = useAppDispatch();

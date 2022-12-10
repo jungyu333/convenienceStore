@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { ISubmitButtonProps } from '../../@types/common';
 
 const Button = styled.button`
+  width: 100%;
   padding: 10px 0;
   border-radius: 10px;
   margin-top: 20px;

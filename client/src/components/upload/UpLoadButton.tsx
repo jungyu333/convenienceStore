@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -23,7 +24,9 @@ const Wrapper = styled.div`
 function UpLoadButton() {
   return (
     <Wrapper>
-      <div>추가하기</div>
+      <Link to="/admin/newproduct">
+        <div>추가하기</div>
+      </Link>
     </Wrapper>
   );
 }
