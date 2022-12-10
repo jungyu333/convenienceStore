@@ -30,3 +30,8 @@ export interface IMyInfo {
   role: number;
   products?: any;
 }
+
+export interface ILogInFormProps {
+  isAdmin?: boolean;
+  headerText: string;
+}

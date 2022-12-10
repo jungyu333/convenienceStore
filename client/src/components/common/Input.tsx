@@ -7,6 +7,11 @@ import { useSelector } from 'react-redux';
 import { setAuth } from '../../reducer/user';
 import { toast } from 'react-toastify';
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const InputItem = styled.input`
   padding: 10px 5px;
   padding-bottom: 5px;
@@ -162,7 +167,7 @@ function Input({
   };
 
   return (
-    <>
+    <Wrapper>
       <Header>
         <label>{label}</label>
         <CheckButtonContainer isEmail={isEmail!}>
@@ -192,7 +197,7 @@ function Input({
       />
 
       <Error>{error?.message}</Error>
-    </>
+    </Wrapper>
   );
 }
 

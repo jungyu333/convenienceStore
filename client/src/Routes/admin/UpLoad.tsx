@@ -3,6 +3,7 @@ import { Container, TableContainer } from '@mui/material';
 import styled from 'styled-components';
 import TableHeader from '../../components/upload/TableHeader';
 import TableRow from '../../components/upload/TableRow';
+import UpLoadButton from '../../components/upload/UpLoadButton';
 
 const Wrapper = styled(Container)`
   margin-top: 10rem;
@@ -20,6 +21,7 @@ function UpLoad() {
         <TableHeader />
         <TableRow />
       </CustomTableContainer>
+      <UpLoadButton />
     </Wrapper>
   );
 }

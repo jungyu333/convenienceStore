@@ -6,6 +6,7 @@ import Profile from './Routes/Profile';
 import SignUp from './Routes/SignUp';
 import AdminLogIn from './Routes/admin/AdminLogIn';
 import UpLoad from './Routes/admin/UpLoad';
+import NewProduct from './Routes/admin/NewProduct';
 
 function Router() {
   return (
@@ -16,6 +17,7 @@ function Router() {
       <Route path="/profile" element={<Profile />} />
       <Route path="/admin/upload" element={<UpLoad />} />
       <Route path="/admin/login" element={<AdminLogIn />} />
+      <Route path="/admin/newproduct" element={<NewProduct />} />
     </Routes>
   );
 }
