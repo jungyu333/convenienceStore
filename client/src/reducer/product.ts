@@ -17,7 +17,16 @@ export const initialState: productState = {
 const productSlice = createSlice({
   name: 'product',
   initialState,
-  reducers: {},
+  reducers: {
+    deleteImage: (state, action) => {
+      state.imagePath = state.imagePath.filter(
+        image => image !== action.payload,
+      );
+    },
+    resetImages: state => {
+      state.imagePath = [];
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(uploadImage.pending, state => {
@@ -39,4 +48,5 @@ const productSlice = createSlice({
   },
 });
 
+export const { deleteImage, resetImages } = productSlice.actions;
 export default productSlice;
