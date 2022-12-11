@@ -2,16 +2,24 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { RootState } from '../../store/store';
+import DeleteImageButton from './DeleteImageButton';
 
 const Wrapper = styled.div`
-  height: 8vh;
+  height: 9vh;
   width: 100%;
   margin-top: 20px;
   display: flex;
   overflow-x: auto;
+`;
+
+const ImageContainer = styled.div`
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
   & img {
-    margin-right: 10px;
-    width: 80px;
+    width: 100%;
+    height: 100%;
     border-radius: 10px;
     box-shadow: 2px 2px 2px ${({ theme }) => theme.colors.gray};
   }
@@ -25,10 +33,10 @@ function ProductPreview() {
       {imagePath.length > 0 ? (
         <Wrapper>
           {imagePath.map((image, index) => (
-            <img
-              key={index}
-              src={`${process.env.REACT_APP_SERVER_URL}/${image}`}
-            />
+            <ImageContainer key={index}>
+              <img src={`${process.env.REACT_APP_SERVER_URL}/${image}`} />
+              <DeleteImageButton image={image} />
+            </ImageContainer>
           ))}
         </Wrapper>
       ) : null}

@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Container } from '@mui/material';
 import Input from '../../components/common/Input';
 import { useForm } from 'react-hook-form';
 import SubmitButton from '../../components/common/SubmitButton';
 import ProductImageInput from '../../components/upload/ProductImageInput';
+import { useAppDispatch } from '../../store/store';
+import { resetImages } from '../../reducer/product';
 
 const Wrapper = styled(Container)`
   background-color: ${({ theme }) => theme.colors.lightgray};
@@ -16,7 +18,7 @@ const Wrapper = styled(Container)`
   min-height: 900px;
   @media ${({ theme }) => theme.device.laptop} {
     width: 60%;
-    margin-top: 10rem;
+    margin-top: 8rem;
     height: 100%;
     min-height: 600px;
     padding-top: 4rem;
@@ -88,6 +90,12 @@ const TextArea = styled.textarea`
 
 function NewProduct() {
   const { register, handleSubmit } = useForm();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(resetImages());
+  }, []);
+
   return (
     <Wrapper>
       <Form>
