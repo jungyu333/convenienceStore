@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 import { uploadImage } from '../action/product';
 
 interface productState {
@@ -29,6 +30,11 @@ const productSlice = createSlice({
       .addCase(uploadImage.rejected, (state, action) => {
         state.imageLoading = false;
         state.imageError = action.payload as string;
+        toast.error('로그인이 필요합니다.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1000,
+          hideProgressBar: true,
+        });
       });
   },
 });

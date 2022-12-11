@@ -16,7 +16,7 @@ const Wrapper = styled(Container)`
   min-height: 900px;
   @media ${({ theme }) => theme.device.laptop} {
     width: 60%;
-    margin-top: 10rem;
+    margin-top: 8rem;
     height: 100%;
     min-height: 600px;
     padding-top: 4rem;
