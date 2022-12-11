@@ -4,6 +4,7 @@ import { AppDataSource } from './data-source';
 import cors from 'cors';
 import userRouter from './routes/user';
 import signUpRouter from './routes/signUp';
+import productRouter from './routes/product';
 import passportConfig from './passport';
 import passport from 'passport';
 import session from 'express-session';
@@ -37,8 +38,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', express.static('avatarupload'));
+app.use('/', express.static('imageupload'));
 app.use('/api/user', userRouter);
 app.use('/api/signUp', signUpRouter);
+app.use('/api/product', productRouter);
 
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
   res.send('welcome!');
