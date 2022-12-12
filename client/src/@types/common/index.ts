@@ -7,3 +7,21 @@ export interface IDropdownMenuProps {
   handleCloseUserMenu: () => void;
   anchorElUser: null | HTMLElement;
 }
+
+export interface IProduct {
+  createdAt: string;
+  updatedAt: string;
+  id: number;
+  name: string;
+  price: number;
+  stock: number;
+  writerId: number;
+  imageUrl: IProductImage[];
+}
+
+export interface IProductImage {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  src: string;
+}

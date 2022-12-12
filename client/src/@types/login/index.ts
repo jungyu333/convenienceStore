@@ -6,7 +6,7 @@ import {
 import { ISignUpData } from '../signup';
 
 export interface IInputProps {
-  type: string;
+  type: 'email' | 'number' | 'text' | 'password' | 'textarea';
   label: string;
   register: UseFormRegisterReturn;
   error?: FieldError;

@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 const InputItem = styled.input`
@@ -41,6 +42,9 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  & label {
+    min-width: max-content;
+  }
 `;
 
 const CheckButton = styled.div`
@@ -78,6 +82,19 @@ const AuthCompelete = styled.div<{ isAuth: boolean }>`
   height: 15px;
   fill: ${({ theme }) => theme.colors.green};
   display: ${props => (props.isAuth ? 'flex' : 'none')};
+`;
+
+const TextArea = styled.textarea`
+  border-radius: 10px;
+  font-size: 1.1rem;
+  padding: 5px;
+  margin: 10px;
+  border: 1px solid ${({ theme }) => theme.colors.gray};
+  background-color: transparent;
+  &:focus {
+    outline: none;
+    border: 1px solid ${({ theme }) => theme.colors.darkOrange};
+  }
 `;
 
 function Input({
@@ -189,12 +206,16 @@ function Input({
         )}
       </Header>
 
-      <InputItem
-        autoComplete="off"
-        type={type}
-        {...register}
-        disabled={isAuth && authDone}
-      />
+      {type === 'textarea' ? (
+        <TextArea rows={8} {...register} />
+      ) : (
+        <InputItem
+          autoComplete="off"
+          type={type}
+          {...register}
+          disabled={isAuth && authDone}
+        />
+      )}
 
       <Error>{error?.message}</Error>
     </Wrapper>

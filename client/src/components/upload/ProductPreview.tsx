@@ -14,8 +14,10 @@ const Wrapper = styled.div`
 
 const ImageContainer = styled.div`
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
+  min-width: 70px;
+  min-height: 70px;
   margin-right: 10px;
   & img {
     width: 100%;

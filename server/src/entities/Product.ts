@@ -32,7 +32,6 @@ export default class Product extends BaseEntity {
 
   @OneToMany(() => Image, image => image.product, {
     nullable: false,
-    onDelete: 'CASCADE',
   })
   imageUrl: Image[];
 }
