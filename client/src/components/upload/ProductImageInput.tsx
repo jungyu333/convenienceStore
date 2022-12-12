@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-width: 50%;
+  min-width: 300px;
   overflow-x: auto;
   @media ${({ theme }) => theme.device.laptop} {
     display: inline;
@@ -23,7 +23,8 @@ const Image = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 350px;
+  width: 100%;
+  min-width: 300px;
   max-width: 430px;
   min-height: 300px;
   height: 30vh;
