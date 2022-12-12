@@ -44,6 +44,7 @@ router.post(
   },
 );
 
+// product upload
 router.post(`/`, uploadImage.none(), isLoggedIn, async (req, res, next) => {
   try {
     const user = await User.findOne({
@@ -82,6 +83,19 @@ router.post(`/`, uploadImage.none(), isLoggedIn, async (req, res, next) => {
       }
     }
     res.status(200).send('ok');
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// products load
+router.get('/', async (req, res, next) => {
+  try {
+    const products = await Product.find({
+      relations: ['imageUrl'],
+    });
+    res.status(200).json(products);
   } catch (error) {
     console.error(error);
     next(error);

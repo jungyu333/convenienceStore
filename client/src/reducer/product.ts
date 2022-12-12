@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { uploadImage, uploadProduct } from '../action/product';
+import { IProduct } from '../@types/common';
+import { loadProducts, uploadImage, uploadProduct } from '../action/product';
 
 interface productState {
   imagePath: string[];
@@ -9,6 +10,10 @@ interface productState {
   uploadProductLoading: boolean;
   uploadProductDone: boolean;
   uploadProductError: string | null;
+  loadProductsLoading: boolean;
+  loadProductsDone: boolean;
+  loadProductsError: string | null;
+  products: IProduct[];
 }
 
 export const initialState: productState = {
@@ -18,6 +23,10 @@ export const initialState: productState = {
   uploadProductLoading: false,
   uploadProductDone: false,
   uploadProductError: null,
+  loadProductsLoading: false,
+  loadProductsDone: false,
+  loadProductsError: null,
+  products: [],
 };
 
 const productSlice = createSlice({
@@ -66,6 +75,20 @@ const productSlice = createSlice({
         state.uploadProductLoading = false;
         state.uploadProductDone = false;
         state.uploadProductError = action.payload as string;
+      })
+      .addCase(loadProducts.pending, state => {
+        state.loadProductsLoading = true;
+        state.loadProductsDone = false;
+      })
+      .addCase(loadProducts.fulfilled, (state, action) => {
+        state.loadProductsLoading = false;
+        state.loadProductsDone = true;
+        state.products = action.payload;
+      })
+      .addCase(loadProducts.rejected, (state, action) => {
+        state.loadProductsLoading = false;
+        state.loadProductsDone = false;
+        state.loadProductsError = action.payload as string;
       });
   },
 });

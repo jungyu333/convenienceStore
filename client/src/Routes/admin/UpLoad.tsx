@@ -4,8 +4,10 @@ import styled from 'styled-components';
 import TableHeader from '../../components/upload/TableHeader';
 import TableRow from '../../components/upload/TableRow';
 import UpLoadButton from '../../components/upload/UpLoadButton';
-import { useAppDispatch } from '../../store/store';
+import { RootState, useAppDispatch } from '../../store/store';
 import { resetProductDone } from '../../reducer/product';
+import { loadProducts } from '../../action/product';
+import { useSelector } from 'react-redux';
 
 const Wrapper = styled(Container)`
   margin-top: 10rem;
@@ -18,10 +20,12 @@ const CustomTableContainer = styled(TableContainer)`
 
 function UpLoad() {
   const dispatch = useAppDispatch();
+  const { products } = useSelector((state: RootState) => state.product);
 
   useEffect(() => {
+    dispatch(loadProducts());
     dispatch(resetProductDone());
-  }, [resetProductDone, dispatch]);
+  }, [dispatch]);
   return (
     <Wrapper>
       <CustomTableContainer>
