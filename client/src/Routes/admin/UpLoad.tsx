@@ -30,7 +30,7 @@ function UpLoad() {
     <Wrapper>
       <CustomTableContainer>
         <TableHeader />
-        <TableRow />
+        <TableRow products={products} />
       </CustomTableContainer>
       <UpLoadButton />
     </Wrapper>

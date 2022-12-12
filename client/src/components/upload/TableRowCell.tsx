@@ -1,6 +1,7 @@
 import { Avatar } from '@mui/material';
 import React from 'react';
 import styled from 'styled-components';
+import { ITableRowCellProps } from '../../@types/upload';
 
 const TableCell = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
@@ -20,15 +21,15 @@ const Wrapper = styled.div`
   margin: 10px 0;
 `;
 
-function TableRowCell() {
+function TableRowCell({ product }: ITableRowCellProps) {
   return (
     <Wrapper>
       <TableCell>
-        <Avatar src="/static/images/avatar/3.jpg" />
+        <Avatar src={`${process.env.REACT_APP_SERVER_URL}/${product.imageUrl[0].src}`} />
       </TableCell>
-      <TableCell>컵라면</TableCell>
-      <TableCell>12</TableCell>
-      <TableCell>133</TableCell>
+      <TableCell>{product.name}</TableCell>
+      <TableCell>{product.price}</TableCell>
+      <TableCell>{product.stock}</TableCell>
       <TableCell>+</TableCell>
     </Wrapper>
   );
