@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { IProduct } from '../@types/common';
 import {
+  deleteProduct,
   editProductStock,
   loadProducts,
   uploadImage,
@@ -21,6 +22,9 @@ interface productState {
   editProductLoading: boolean;
   editProductDone: boolean;
   editProductError: string | null;
+  deleteProductLoading: boolean;
+  deleteProductDone: boolean;
+  deleteProductError: string | null;
   products: IProduct[];
 }
 
@@ -37,6 +41,9 @@ export const initialState: productState = {
   editProductLoading: false,
   editProductDone: false,
   editProductError: null,
+  deleteProductLoading: false,
+  deleteProductDone: false,
+  deleteProductError: null,
   products: [],
 };
 
@@ -114,13 +121,26 @@ const productSlice = createSlice({
         );
         if (editProduct) {
           editProduct.stock = action.payload.stock;
-          console.log(editProduct);
         }
       })
       .addCase(editProductStock.rejected, (state, action) => {
         state.editProductLoading = false;
         state.editProductDone = false;
         state.editProductError = action.payload as string;
+      })
+      .addCase(deleteProduct.pending, state => {
+        state.deleteProductLoading = true;
+        state.deleteProductDone = false;
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.deleteProductLoading = false;
+        state.deleteProductDone = true;
+        state.products = action.payload;
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
+        state.deleteProductLoading = false;
+        state.deleteProductDone = false;
+        state.deleteProductError = action.payload as string;
       });
   },
 });

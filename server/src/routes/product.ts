@@ -126,4 +126,42 @@ router.post('/stock', isLoggedIn, async (req, res, next) => {
   }
 });
 
+// product delete
+router.post('/delete', isLoggedIn, async (req, res, next) => {
+  try {
+    const id = req.body.id;
+    const product = await Product.findOne({
+      where: {
+        id: id,
+      },
+    });
+
+    if (product) {
+      const images = await Image.find({
+        where: {
+          product: {
+            id: id,
+          },
+        },
+      });
+
+      images.forEach(async image => {
+        image.product = null;
+        await image.save();
+      });
+
+      await Product.delete({
+        id: id,
+      });
+    }
+    const products = await Product.find({
+      relations: ['imageUrl'],
+    });
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 export default router;
