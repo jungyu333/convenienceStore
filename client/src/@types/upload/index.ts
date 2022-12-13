@@ -29,3 +29,7 @@ export interface IEditProductStockData {
   stock: number;
   productId: number;
 }
+
+export interface IDeleteProductData {
+  id: number;
+}

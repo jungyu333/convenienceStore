@@ -7,7 +7,9 @@ export default class Image extends BaseEntity {
   @Column()
   src: string;
 
-  @ManyToOne(() => Product, product => product.imageUrl)
+  @ManyToOne(() => Product, product => product.imageUrl, {
+    nullable: true,
+  })
   @JoinColumn()
-  product: Product;
+  product: Product | null;
 }

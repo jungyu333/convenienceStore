@@ -13,6 +13,9 @@ const Wrapper = styled(Menu)`
 
 const CustomMenuItem = styled(MenuItem)`
   min-width: 150px;
+  & a {
+    width: 100%;
+  }
 `;
 
 function DropdownMenu({
