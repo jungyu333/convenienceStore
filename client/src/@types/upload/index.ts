@@ -20,6 +20,12 @@ export interface ITableRowCellProps {
 }
 
 export interface IStockControllProps {
+  productId: number;
   stock: number;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface IEditProductStockData {
+  stock: number;
+  productId: number;
 }

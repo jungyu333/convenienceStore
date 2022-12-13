@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { IStockControllProps } from '../../@types/upload';
+import { editProductStock } from '../../action/product';
+import { useAppDispatch } from '../../store/store';
 
 const StockContainer = styled.div`
   display: flex;
@@ -47,21 +49,39 @@ const StockContainer = styled.div`
   }
 `;
 
-function StockControll({ stock, setIsOpen }: IStockControllProps) {
+function StockControll({ stock, setIsOpen, productId }: IStockControllProps) {
+  const dispatch = useAppDispatch();
+  const [current, setCurrent] = useState(stock);
   const onClickStockSave = () => {
     setIsOpen(prev => !prev);
+    dispatch(editProductStock({ stock: current, productId: productId }));
   };
+  const onClickPlus = () => {
+    setCurrent(prev => (prev = prev + 1));
+  };
+  const onClickMinus = () => {
+    setCurrent(prev => (prev = prev - 1));
+  };
+
   return (
     <StockContainer>
       <div>
         <span>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+          <svg
+            onClick={onClickPlus}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 448 512"
+          >
             <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
           </svg>
         </span>
-        <div>{stock}</div>
+        <div>{current}</div>
         <span>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+          <svg
+            onClick={onClickMinus}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 448 512"
+          >
             <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z" />
           </svg>
         </span>

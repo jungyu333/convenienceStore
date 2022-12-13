@@ -67,7 +67,11 @@ function TableRowCell({ product }: ITableRowCellProps) {
             </svg>
           </EditContainer>
         ) : (
-          <StockControll setIsOpen={setIsOpen} stock={product.stock} />
+          <StockControll
+            productId={product.id}
+            setIsOpen={setIsOpen}
+            stock={product.stock}
+          />
         )}
       </TableCell>
     </Wrapper>
