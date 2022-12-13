@@ -18,3 +18,8 @@ export interface ITableRowProps {
 export interface ITableRowCellProps {
   product: IProduct;
 }
+
+export interface IStockControllProps {
+  stock: number;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
