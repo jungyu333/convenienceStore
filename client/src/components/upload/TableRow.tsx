@@ -1,6 +1,6 @@
-import { Avatar } from '@mui/material';
 import React from 'react';
 import styled from 'styled-components';
+import { ITableRowProps } from '../../@types/upload';
 import TableRowCell from './TableRowCell';
 
 const Wrapper = styled.div`
@@ -8,12 +8,12 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-function TableRow() {
+function TableRow({ products }: ITableRowProps) {
   return (
     <Wrapper>
-      {[1, 2, 3, 4, 5].map((item, index) => (
+      {products.map((product, index) => (
         <div key={index}>
-          <TableRowCell />
+          <TableRowCell product={product} />
         </div>
       ))}
     </Wrapper>

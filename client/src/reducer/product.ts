@@ -1,7 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { IProduct } from '../@types/common';
-import { loadProducts, uploadImage, uploadProduct } from '../action/product';
+import {
+  editProductStock,
+  loadProducts,
+  uploadImage,
+  uploadProduct,
+} from '../action/product';
 
 interface productState {
   imagePath: string[];
@@ -13,6 +18,9 @@ interface productState {
   loadProductsLoading: boolean;
   loadProductsDone: boolean;
   loadProductsError: string | null;
+  editProductLoading: boolean;
+  editProductDone: boolean;
+  editProductError: string | null;
   products: IProduct[];
 }
 
@@ -26,6 +34,9 @@ export const initialState: productState = {
   loadProductsLoading: false,
   loadProductsDone: false,
   loadProductsError: null,
+  editProductLoading: false,
+  editProductDone: false,
+  editProductError: null,
   products: [],
 };
 
@@ -89,6 +100,27 @@ const productSlice = createSlice({
         state.loadProductsLoading = false;
         state.loadProductsDone = false;
         state.loadProductsError = action.payload as string;
+      })
+      .addCase(editProductStock.pending, state => {
+        state.editProductLoading = true;
+        state.editProductDone = false;
+      })
+      .addCase(editProductStock.fulfilled, (state, action) => {
+        state.editProductLoading = false;
+        state.editProductDone = true;
+
+        const editProduct = state.products.find(
+          element => element.id + '' === action.payload.productId + '',
+        );
+        if (editProduct) {
+          editProduct.stock = action.payload.stock;
+          console.log(editProduct);
+        }
+      })
+      .addCase(editProductStock.rejected, (state, action) => {
+        state.editProductLoading = false;
+        state.editProductDone = false;
+        state.editProductError = action.payload as string;
       });
   },
 });

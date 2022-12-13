@@ -102,4 +102,28 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+// product stock edit
+router.post('/stock', isLoggedIn, async (req, res, next) => {
+  try {
+    const id = req.body.productId;
+    const stock = req.body.stock;
+    const product = await Product.findOne({
+      where: {
+        id: id,
+      },
+    });
+
+    if (product) {
+      product.stock = stock;
+      await product.save();
+      res.status(200).json({ productId: product.id, stock: product.stock });
+    } else {
+      res.status(400).send('등록되지 않은 상품입니다.');
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 export default router;

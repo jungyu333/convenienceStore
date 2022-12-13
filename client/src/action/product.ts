@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { IProduct } from '../@types/common';
+import { IEditProductStockData } from '../@types/upload';
 
 export const uploadImage = createAsyncThunk<string, FormData>(
   'imageUpLoad',
@@ -37,3 +38,18 @@ export const loadProducts = createAsyncThunk<IProduct[]>(
     }
   },
 );
+
+export const editProductStock = createAsyncThunk<
+  IEditProductStockData,
+  IEditProductStockData
+>('stock/edit', async (data, thunkApi) => {
+  try {
+    const response = await axios.post('/api/product/stock', {
+      stock: data.stock,
+      productId: data.productId,
+    });
+    return response.data;
+  } catch (error: any) {
+    return thunkApi.rejectWithValue(error.response.data);
+  }
+});
