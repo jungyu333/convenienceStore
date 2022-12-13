@@ -127,6 +127,11 @@ const productSlice = createSlice({
         state.editProductLoading = false;
         state.editProductDone = false;
         state.editProductError = action.payload as string;
+        toast.error(action.payload as string, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1000,
+          hideProgressBar: true,
+        });
       })
       .addCase(deleteProduct.pending, state => {
         state.deleteProductLoading = true;
@@ -141,6 +146,11 @@ const productSlice = createSlice({
         state.deleteProductLoading = false;
         state.deleteProductDone = false;
         state.deleteProductError = action.payload as string;
+        toast.error(action.payload as string, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1000,
+          hideProgressBar: true,
+        });
       });
   },
 });
