@@ -4,7 +4,7 @@ import multer from 'multer';
 import Image from '../entities/Image';
 import Product from '../entities/Product';
 import User from '../entities/User';
-import { isLoggedIn } from './middleware';
+import { isAdmin, isLoggedIn } from './middleware';
 
 const router = express.Router();
 
@@ -32,6 +32,7 @@ router.post(
   '/image',
   uploadImage.single('image'),
   isLoggedIn,
+  isAdmin,
   async (req, res, next) => {
     try {
       if (req.file) {
@@ -45,49 +46,55 @@ router.post(
 );
 
 // product upload
-router.post(`/`, uploadImage.none(), isLoggedIn, async (req, res, next) => {
-  try {
-    const user = await User.findOne({
-      where: {
-        id: req.user?.id,
-      },
-    });
-    if (user) {
-      const name = req.body.name;
-      const price = req.body.price;
-      const stock = req.body.stock;
-      const description = req.body.description;
+router.post(
+  `/`,
+  uploadImage.none(),
+  isLoggedIn,
+  isAdmin,
+  async (req, res, next) => {
+    try {
+      const user = await User.findOne({
+        where: {
+          id: req.user?.id,
+        },
+      });
+      if (user) {
+        const name = req.body.name;
+        const price = req.body.price;
+        const stock = req.body.stock;
+        const description = req.body.description;
 
-      const newProduct = new Product();
+        const newProduct = new Product();
 
-      newProduct.name = name;
-      newProduct.price = parseInt(price);
-      newProduct.stock = parseInt(stock);
-      newProduct.description = description;
-      newProduct.writer = user;
+        newProduct.name = name;
+        newProduct.price = parseInt(price);
+        newProduct.stock = parseInt(stock);
+        newProduct.description = description;
+        newProduct.writer = user;
 
-      await newProduct.save();
+        await newProduct.save();
 
-      if (Array.isArray(req.body.image)) {
-        req.body.image.forEach(async (img: string) => {
+        if (Array.isArray(req.body.image)) {
+          req.body.image.forEach(async (img: string) => {
+            const newImage = new Image();
+            newImage.src = img;
+            newImage.product = newProduct;
+            await newImage.save();
+          });
+        } else {
           const newImage = new Image();
-          newImage.src = img;
+          newImage.src = req.body.image;
           newImage.product = newProduct;
           await newImage.save();
-        });
-      } else {
-        const newImage = new Image();
-        newImage.src = req.body.image;
-        newImage.product = newProduct;
-        await newImage.save();
+        }
       }
+      res.status(200).send('ok');
+    } catch (error) {
+      console.error(error);
+      next(error);
     }
-    res.status(200).send('ok');
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-});
+  },
+);
 
 // products load
 router.get('/', async (req, res, next) => {
@@ -103,7 +110,7 @@ router.get('/', async (req, res, next) => {
 });
 
 // product stock edit
-router.post('/stock', isLoggedIn, async (req, res, next) => {
+router.post('/stock', isLoggedIn, isAdmin, async (req, res, next) => {
   try {
     const id = req.body.productId;
     const stock = req.body.stock;
@@ -127,7 +134,7 @@ router.post('/stock', isLoggedIn, async (req, res, next) => {
 });
 
 // product delete
-router.post('/delete', isLoggedIn, async (req, res, next) => {
+router.post('/delete', isLoggedIn, isAdmin, async (req, res, next) => {
   try {
     const id = req.body.id;
     const product = await Product.findOne({

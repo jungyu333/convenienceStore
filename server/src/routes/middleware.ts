@@ -16,4 +16,12 @@ const isNotLoggedIn = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { isLoggedIn, isNotLoggedIn };
+const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+  if (req.user?.role === 1) {
+    next();
+  } else {
+    res.status(401).send('관리자만 사용 가능한 기능입니다.');
+  }
+};
+
+export { isLoggedIn, isNotLoggedIn, isAdmin };
