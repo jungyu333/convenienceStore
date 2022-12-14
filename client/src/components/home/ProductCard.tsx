@@ -6,6 +6,15 @@ import { IProductCardProps } from '../../@types/home';
 const Wrapper = styled(Card)`
   width: 100%;
   height: 100%;
+  & div:first-child {
+    transition: 0.3s ease-in-out;
+  }
+  :hover {
+    & div:first-child {
+      scale: 1.1;
+      transition: 0.3s ease-in-out;
+    }
+  }
   @media ${({ theme }) => theme.device.laptop} {
     width: 90%;
   }
