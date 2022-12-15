@@ -7,6 +7,7 @@ import SignUp from './Routes/SignUp';
 import AdminLogIn from './Routes/admin/AdminLogIn';
 import UpLoad from './Routes/admin/UpLoad';
 import NewProduct from './Routes/admin/NewProduct';
+import ProductDetail from './Routes/ProductDetail';
 
 function Router() {
   return (
@@ -18,6 +19,7 @@ function Router() {
       <Route path="/admin/upload" element={<UpLoad />} />
       <Route path="/admin/login" element={<AdminLogIn />} />
       <Route path="/admin/newproduct" element={<NewProduct />} />
+      <Route path="/product/:id" element={<ProductDetail />} />
     </Routes>
   );
 }
