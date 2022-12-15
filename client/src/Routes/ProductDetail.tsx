@@ -5,6 +5,14 @@ import styled from 'styled-components';
 const Wrapper = styled(Container)`
   margin: 0 auto;
   margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  @media ${({ theme }) => theme.device.laptop} {
+    width: 100%;
+    margin-top: 10rem;
+    display: flex;
+    flex-direction: row;
+  }
 `;
 
 const Image = styled.div`
@@ -12,19 +20,22 @@ const Image = styled.div`
   height: 30vh;
   min-height: 300px;
   background-color: gray;
+  @media ${({ theme }) => theme.device.laptop} {
+    width: 40%;
+    min-width: 400px;
+    min-height: 500px;
+  }
 `;
 
 const InfoContainer = styled.div`
   margin: 20px 0;
-  display: flex;
-  flex-direction: column;
   & h1 {
     font-size: 1.3rem;
     font-weight: 600;
   }
 
   & div {
-    margin: 10px 0;
+    margin: 15px 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -38,6 +49,7 @@ const InfoContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+
     & p {
       margin-top: 10px;
       width: 100%;
@@ -65,6 +77,23 @@ const InfoContainer = styled.div`
       color: ${({ theme }) => theme.colors.lightgray};
     }
   }
+
+  @media ${({ theme }) => theme.device.laptop} {
+    width: 60%;
+    margin: 0;
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    & div {
+      margin: 20px 0;
+    }
+
+    & div:last-child {
+      margin: 0;
+    }
+  }
 `;
 
 const QuantityContainer = styled.span`
@@ -74,6 +103,7 @@ const QuantityContainer = styled.span`
   align-items: center;
   height: 100%;
   font-size: 1.2rem;
+
   & div {
     font-size: 1rem;
     font-weight: 300;
@@ -82,6 +112,7 @@ const QuantityContainer = styled.span`
     background-color: transparent;
     padding: 5px 8px;
   }
+
   & svg {
     width: 15px;
     height: 15px;
@@ -89,6 +120,7 @@ const QuantityContainer = styled.span`
     border: 1px solid ${({ theme }) => theme.colors.gray};
     cursor: pointer;
     fill: ${({ theme }) => theme.colors.gray};
+
     &:hover {
       fill: ${({ theme }) => theme.colors.black};
       border-color: ${({ theme }) => theme.colors.black};
