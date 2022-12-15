@@ -1,11 +1,21 @@
 import { Card, CardActionArea, CardContent, CardMedia } from '@mui/material';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { IProductCardProps } from '../../@types/home';
 
 const Wrapper = styled(Card)`
   width: 100%;
   height: 100%;
+  & div:first-child {
+    transition: 0.3s ease-in-out;
+  }
+  :hover {
+    & div:first-child {
+      scale: 1.1;
+      transition: 0.3s ease-in-out;
+    }
+  }
   @media ${({ theme }) => theme.device.laptop} {
     width: 90%;
   }
@@ -31,9 +41,13 @@ const ProductImage = styled(CardMedia)`
 `;
 
 function ProductCard({ product }: IProductCardProps) {
+  const navigation = useNavigate();
+  const onClickProduct = () => {
+    navigation(`/product/${product.id}`);
+  };
   return (
     <Wrapper>
-      <CardActionArea>
+      <CardActionArea onClick={onClickProduct}>
         <ProductImage
           image={`${process.env.REACT_APP_SERVER_URL}/${product.imageUrl[0].src}`}
         />
