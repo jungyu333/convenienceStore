@@ -1,6 +1,9 @@
 import { Container } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { loadProduct } from '../action/product';
+import { useAppDispatch } from '../store/store';
 
 const Wrapper = styled(Container)`
   margin: 0 auto;
@@ -129,6 +132,14 @@ const QuantityContainer = styled.span`
 `;
 
 function ProductDetail() {
+  const { id } = useParams();
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (id) {
+      dispatch(loadProduct(id));
+    }
+  }, []);
   return (
     <Wrapper>
       <Image />

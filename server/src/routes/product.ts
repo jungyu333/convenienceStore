@@ -96,6 +96,29 @@ router.post(
   },
 );
 
+// product load
+router.post('/detail', async (req, res, next) => {
+  try {
+    const id = req.body.id;
+    if (id) {
+      const product = await Product.findOne({
+        where: {
+          id: parseInt(id as string),
+        },
+        relations: ['imageUrl'],
+      });
+      if (product) {
+        return res.status(200).json(product);
+      } else {
+        return res.status(400).send('존재하지 않는 상품입니다.');
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 // products load
 router.get('/', async (req, res, next) => {
   try {

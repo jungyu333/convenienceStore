@@ -67,3 +67,15 @@ export const deleteProduct = createAsyncThunk<IProduct[], IDeleteProductData>(
     }
   },
 );
+
+export const loadProduct = createAsyncThunk<IProduct, string>(
+  'product/load',
+  async (data, thunkApi) => {
+    try {
+      const response = await axios.post(`/api/product/detail`, { id: data });
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data);
+    }
+  },
+);
