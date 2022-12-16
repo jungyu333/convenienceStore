@@ -79,6 +79,9 @@ const productSlice = createSlice({
     minusQuantity: state => {
       state.quantity--;
     },
+    resetQuantity: state => {
+      state.quantity = 1;
+    },
   },
   extraReducers: builder => {
     builder
@@ -193,5 +196,6 @@ export const {
   resetProductDone,
   plusQuantity,
   minusQuantity,
+  resetQuantity,
 } = productSlice.actions;
 export default productSlice;

@@ -3,9 +3,10 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { addCart } from '../action/cart';
 import { loadProduct } from '../action/product';
 import ProductImage from '../components/ProductDetail/ProductImage';
-import { minusQuantity, plusQuantity } from '../reducer/product';
+import { minusQuantity, plusQuantity, resetQuantity } from '../reducer/product';
 import { RootState, useAppDispatch } from '../store/store';
 
 const Wrapper = styled(Container)`
@@ -125,6 +126,7 @@ const QuantityContainer = styled.span`
 
 function ProductDetail() {
   const { id } = useParams();
+
   const dispatch = useAppDispatch();
 
   const onClickPlus = () => {
@@ -134,11 +136,23 @@ function ProductDetail() {
   const onClickMinus = () => {
     dispatch(minusQuantity());
   };
+
+  const onClickCart = () => {
+    if (id) {
+      dispatch(
+        addCart({
+          productId: parseInt(id),
+          quantity: quantity,
+        }),
+      );
+      dispatch(resetQuantity());
+    }
+  };
   useEffect(() => {
     if (id) {
       dispatch(loadProduct(id));
     }
-  }, []);
+  }, [dispatch]);
   const { product, loadProductLoading, quantity } = useSelector(
     (state: RootState) => state.product,
   );
@@ -174,7 +188,7 @@ function ProductDetail() {
               <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z" />
             </svg>
           </QuantityContainer>
-          <button>장바구니에 담기</button>
+          <button onClick={onClickCart}>장바구니에 담기</button>
         </div>
       </InfoContainer>
     </Wrapper>

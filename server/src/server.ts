@@ -5,6 +5,7 @@ import cors from 'cors';
 import userRouter from './routes/user';
 import signUpRouter from './routes/signUp';
 import productRouter from './routes/product';
+import cartRouter from './routes/cart';
 import passportConfig from './passport';
 import passport from 'passport';
 import session from 'express-session';
@@ -42,6 +43,7 @@ app.use('/', express.static('imageupload'));
 app.use('/api/user', userRouter);
 app.use('/api/signUp', signUpRouter);
 app.use('/api/product', productRouter);
+app.use('/api/cart', cartRouter);
 
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
   res.send('welcome!');

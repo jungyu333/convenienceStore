@@ -1,5 +1,4 @@
 import { Column, Entity, ManyToOne } from 'typeorm';
-
 import BaseEntity from './Entity';
 import Product from './Product';
 import User from './User';

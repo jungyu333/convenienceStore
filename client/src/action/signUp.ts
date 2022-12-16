@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 //회원가입
-export const signUp = createAsyncThunk<any, FormData>(
+export const signUp = createAsyncThunk<string, FormData>(
   'singUp',
   async (data, thunkApi) => {
     try {
