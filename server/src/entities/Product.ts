@@ -3,6 +3,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import Image from './Image';
 import User from './User';
 import BaseEntity from './Entity';
+import Cart from './Cart';
 
 @Entity('products')
 export default class Product extends BaseEntity {
@@ -27,6 +28,9 @@ export default class Product extends BaseEntity {
     nullable: false,
     onDelete: 'CASCADE',
   })
+  @OneToMany(() => Cart, cart => cart.product, { cascade: true })
+  carts: Cart[];
+
   @JoinColumn({ name: 'writerId' })
   writer: User;
 
