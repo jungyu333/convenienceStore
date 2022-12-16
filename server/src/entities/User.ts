@@ -42,14 +42,14 @@ export default class User extends BaseEntity {
     }
   }
 
+  @OneToMany(() => Product, product => product.writer, { cascade: true })
+  products: Product[];
+
   @OneToMany(() => Cart, cart => cart.user, {
     nullable: true,
     onDelete: 'CASCADE',
   })
   carts: Cart[];
-
-  @OneToMany(() => Product, product => product.writer, { cascade: true })
-  products: Product[];
 
   @BeforeInsert()
   async hashPassword() {

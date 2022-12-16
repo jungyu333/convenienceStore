@@ -28,9 +28,6 @@ export default class Product extends BaseEntity {
     nullable: false,
     onDelete: 'CASCADE',
   })
-  @OneToMany(() => Cart, cart => cart.product, { cascade: true })
-  carts: Cart[];
-
   @JoinColumn({ name: 'writerId' })
   writer: User;
 
@@ -38,4 +35,7 @@ export default class Product extends BaseEntity {
     nullable: false,
   })
   imageUrl: Image[];
+
+  @OneToMany(() => Cart, cart => cart.product, { cascade: true })
+  carts: Cart[];
 }

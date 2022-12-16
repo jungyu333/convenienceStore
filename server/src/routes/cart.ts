@@ -55,4 +55,22 @@ router.post('/', isLoggedIn, async (req, res, next) => {
   }
 });
 
+// load carts
+router.get('/', isLoggedIn, async (req, res, next) => {
+  try {
+    const carts = await Cart.find({
+      where: {
+        user: {
+          id: req.user?.id,
+        },
+      },
+      relations: ['product', 'product.imageUrl'],
+    });
+    res.status(200).json(carts);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 export default router;

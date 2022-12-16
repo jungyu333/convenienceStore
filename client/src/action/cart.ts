@@ -1,8 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { IAddCartData } from '../@types/cart';
+import { ICart } from '../@types/common';
 
-// add Cart
+// add cart
 export const addCart = createAsyncThunk<string, IAddCartData>(
   'add/cart',
   async (data, thunkApi) => {
@@ -11,6 +12,19 @@ export const addCart = createAsyncThunk<string, IAddCartData>(
         productId: data.productId,
         quantity: data.quantity,
       });
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data);
+    }
+  },
+);
+
+// carts load
+export const loadCarts = createAsyncThunk<ICart[]>(
+  'carts/load',
+  async (data, thunkApi) => {
+    try {
+      const response = await axios.get('/api/cart');
       return response.data;
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.response.data);

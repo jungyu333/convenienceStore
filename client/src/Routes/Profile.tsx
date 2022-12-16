@@ -85,7 +85,7 @@ function Profile() {
         </InfoItem>
         <InfoItem>
           <div>Cart</div>
-          <Link to="/">
+          <Link to="/cart">
             <span>go!</span>
           </Link>
         </InfoItem>

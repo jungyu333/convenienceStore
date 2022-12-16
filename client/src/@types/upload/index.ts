@@ -11,14 +11,6 @@ export interface IProductData {
   description: string;
 }
 
-export interface ITableRowProps {
-  products: IProduct[];
-}
-
-export interface ITableRowCellProps {
-  product: IProduct;
-}
-
 export interface IStockControllProps {
   productId: number;
   stock: number;

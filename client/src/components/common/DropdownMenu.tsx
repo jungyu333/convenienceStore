@@ -49,7 +49,7 @@ function DropdownMenu({
       </CustomMenuItem>
       {me?.role === 0 ? (
         <CustomMenuItem onClick={handleCloseUserMenu}>
-          <div>Cart</div>
+          <Link to="/cart">Cart</Link>
         </CustomMenuItem>
       ) : (
         <CustomMenuItem onClick={handleCloseUserMenu}>
