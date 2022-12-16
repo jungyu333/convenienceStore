@@ -1,6 +1,11 @@
 import { Container } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { loadProduct } from '../action/product';
+import ProductImage from '../components/ProductDetail/ProductImage';
+import { RootState, useAppDispatch } from '../store/store';
 
 const Wrapper = styled(Container)`
   margin: 0 auto;
@@ -12,18 +17,6 @@ const Wrapper = styled(Container)`
     margin-top: 10rem;
     display: flex;
     flex-direction: row;
-  }
-`;
-
-const Image = styled.div`
-  width: 100%;
-  height: 30vh;
-  min-height: 300px;
-  background-color: gray;
-  @media ${({ theme }) => theme.device.laptop} {
-    width: 40%;
-    min-width: 400px;
-    min-height: 500px;
   }
 `;
 
@@ -59,6 +52,7 @@ const InfoContainer = styled.div`
       border-radius: 10px;
       padding: 10px;
       font-size: 0.9rem;
+      line-height: 2;
       color: ${({ theme }) => theme.colors.black};
     }
   }
@@ -129,18 +123,29 @@ const QuantityContainer = styled.span`
 `;
 
 function ProductDetail() {
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (id) {
+      dispatch(loadProduct(id));
+    }
+  }, []);
+  const { product, loadProductLoading } = useSelector(
+    (state: RootState) => state.product,
+  );
+
   return (
     <Wrapper>
-      <Image />
+      {!loadProductLoading && <ProductImage images={product?.imageUrl!} />}
       <InfoContainer>
-        <h1>name</h1>
+        <h1>{product?.name}</h1>
         <div>
           <h2>가격</h2>
-          <span>1200원</span>
+          <span>{product?.price}원</span>
         </div>
         <div>
           <h2>상품설명</h2>
-          <p>설명</p>
+          <p>{product?.description}</p>
         </div>
         <div>
           <QuantityContainer>

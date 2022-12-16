@@ -16,6 +16,7 @@ export interface IProduct {
   price: number;
   stock: number;
   writerId: number;
+  description: string;
   imageUrl: IProductImage[];
 }
 

@@ -4,6 +4,7 @@ import { IProduct } from '../@types/common';
 import {
   deleteProduct,
   editProductStock,
+  loadProduct,
   loadProducts,
   uploadImage,
   uploadProduct,
@@ -25,6 +26,10 @@ interface productState {
   deleteProductLoading: boolean;
   deleteProductDone: boolean;
   deleteProductError: string | null;
+  loadProductLoading: boolean;
+  loadProductDone: boolean;
+  loadProductError: string | null;
+  product: IProduct | null;
   products: IProduct[];
 }
 
@@ -44,6 +49,10 @@ export const initialState: productState = {
   deleteProductLoading: false,
   deleteProductDone: false,
   deleteProductError: null,
+  loadProductLoading: false,
+  loadProductDone: false,
+  loadProductError: null,
+  product: null,
   products: [],
 };
 
@@ -151,6 +160,20 @@ const productSlice = createSlice({
           autoClose: 1000,
           hideProgressBar: true,
         });
+      })
+      .addCase(loadProduct.pending, state => {
+        state.loadProductLoading = true;
+        state.loadProductDone = false;
+      })
+      .addCase(loadProduct.fulfilled, (state, action) => {
+        state.loadProductLoading = false;
+        state.loadProductDone = true;
+        state.product = action.payload;
+      })
+      .addCase(loadProduct.rejected, (state, action) => {
+        state.loadProductLoading = false;
+        state.loadProductDone = false;
+        state.loadProductError = action.payload as string;
       });
   },
 });
