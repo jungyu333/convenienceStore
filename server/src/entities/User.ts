@@ -4,6 +4,7 @@ import BaseEntity from './Entity';
 import { BeforeInsert, Column, Entity, Index, OneToMany } from 'typeorm';
 import { Expose } from 'class-transformer';
 import Product from './Product';
+import Cart from './Cart';
 
 @Entity('users')
 export default class User extends BaseEntity {
@@ -40,6 +41,12 @@ export default class User extends BaseEntity {
       return 'https://www.gravatar.com/avatar?d=mp&f=y';
     }
   }
+
+  @OneToMany(() => Cart, cart => cart.user, {
+    nullable: true,
+    onDelete: 'CASCADE',
+  })
+  carts: Cart[];
 
   @OneToMany(() => Product, product => product.writer, { cascade: true })
   products: Product[];

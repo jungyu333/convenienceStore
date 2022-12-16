@@ -3,6 +3,7 @@ import axios from 'axios';
 import { IProduct } from '../@types/common';
 import { IDeleteProductData, IEditProductStockData } from '../@types/upload';
 
+// product image upload
 export const uploadImage = createAsyncThunk<string, FormData>(
   'imageUpLoad',
   async (data, thunkApi) => {
@@ -15,6 +16,7 @@ export const uploadImage = createAsyncThunk<string, FormData>(
   },
 );
 
+// product upload
 export const uploadProduct = createAsyncThunk<string, FormData>(
   'product/upload',
   async (data, thunkApi) => {
@@ -27,6 +29,7 @@ export const uploadProduct = createAsyncThunk<string, FormData>(
   },
 );
 
+// products load
 export const loadProducts = createAsyncThunk<IProduct[]>(
   'products/load',
   async (data, thunkApi) => {
@@ -39,6 +42,7 @@ export const loadProducts = createAsyncThunk<IProduct[]>(
   },
 );
 
+// product stock edit
 export const editProductStock = createAsyncThunk<
   IEditProductStockData,
   IEditProductStockData
@@ -54,6 +58,7 @@ export const editProductStock = createAsyncThunk<
   }
 });
 
+// product delete
 export const deleteProduct = createAsyncThunk<IProduct[], IDeleteProductData>(
   'product/delete',
   async (data, thunkApi) => {
@@ -68,6 +73,7 @@ export const deleteProduct = createAsyncThunk<IProduct[], IDeleteProductData>(
   },
 );
 
+// product load
 export const loadProduct = createAsyncThunk<IProduct, string>(
   'product/load',
   async (data, thunkApi) => {
