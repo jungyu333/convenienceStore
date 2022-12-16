@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { loadProduct } from '../action/product';
 import ProductImage from '../components/ProductDetail/ProductImage';
+import { minusQuantity, plusQuantity } from '../reducer/product';
 import { RootState, useAppDispatch } from '../store/store';
 
 const Wrapper = styled(Container)`
@@ -125,12 +126,20 @@ const QuantityContainer = styled.span`
 function ProductDetail() {
   const { id } = useParams();
   const dispatch = useAppDispatch();
+
+  const onClickPlus = () => {
+    dispatch(plusQuantity());
+  };
+
+  const onClickMinus = () => {
+    dispatch(minusQuantity());
+  };
   useEffect(() => {
     if (id) {
       dispatch(loadProduct(id));
     }
   }, []);
-  const { product, loadProductLoading } = useSelector(
+  const { product, loadProductLoading, quantity } = useSelector(
     (state: RootState) => state.product,
   );
 
@@ -149,11 +158,19 @@ function ProductDetail() {
         </div>
         <div>
           <QuantityContainer>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <svg
+              onClick={onClickPlus}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+            >
               <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
             </svg>
-            <div>5</div>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <div>{quantity}</div>
+            <svg
+              onClick={onClickMinus}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+            >
               <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z" />
             </svg>
           </QuantityContainer>

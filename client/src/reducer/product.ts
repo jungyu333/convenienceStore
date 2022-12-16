@@ -30,6 +30,7 @@ interface productState {
   loadProductDone: boolean;
   loadProductError: string | null;
   product: IProduct | null;
+  quantity: number;
   products: IProduct[];
 }
 
@@ -52,6 +53,7 @@ export const initialState: productState = {
   loadProductLoading: false,
   loadProductDone: false,
   loadProductError: null,
+  quantity: 1,
   product: null,
   products: [],
 };
@@ -70,6 +72,12 @@ const productSlice = createSlice({
     },
     resetProductDone: state => {
       state.uploadProductDone = false;
+    },
+    plusQuantity: state => {
+      state.quantity++;
+    },
+    minusQuantity: state => {
+      state.quantity--;
     },
   },
   extraReducers: builder => {
@@ -169,6 +177,7 @@ const productSlice = createSlice({
         state.loadProductLoading = false;
         state.loadProductDone = true;
         state.product = action.payload;
+        state.quantity = 1;
       })
       .addCase(loadProduct.rejected, (state, action) => {
         state.loadProductLoading = false;
@@ -178,6 +187,11 @@ const productSlice = createSlice({
   },
 });
 
-export const { deleteImage, resetImages, resetProductDone } =
-  productSlice.actions;
+export const {
+  deleteImage,
+  resetImages,
+  resetProductDone,
+  plusQuantity,
+  minusQuantity,
+} = productSlice.actions;
 export default productSlice;
