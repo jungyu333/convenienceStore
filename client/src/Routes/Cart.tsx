@@ -25,10 +25,13 @@ function Cart() {
 
   useEffect(() => {
     dispatch(loadCarts());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (carts) {
       dispatch(setTotal(uesGetTotal(carts!)));
     }
-  }, [dispatch]);
+  }, [carts, dispatch]);
   return (
     <Wrapper>
       <CustomTableContainer>
