@@ -26,3 +26,25 @@ export interface IProductImage {
   updatedAt: string;
   src: string;
 }
+
+export interface ITableHeaderProps {
+  isCart?: boolean;
+}
+
+export interface ITableRowProps {
+  products?: IProduct[];
+  carts?: ICart[];
+}
+
+export interface ITableRowCellProps {
+  product?: IProduct;
+  cart?: ICart;
+}
+
+export interface ICart {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  quantity: number;
+  product: IProduct;
+}

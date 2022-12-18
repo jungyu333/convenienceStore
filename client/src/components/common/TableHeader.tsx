@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ITableHeaderProps } from '../../@types/common';
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.darkOrange};
@@ -21,13 +22,13 @@ const TableCell = styled.div`
   justify-content: center;
 `;
 
-function TableHeader() {
+function TableHeader({ isCart }: ITableHeaderProps) {
   return (
     <Wrapper>
       <TableCell>Image</TableCell>
       <TableCell>Name</TableCell>
       <TableCell>Price</TableCell>
-      <TableCell>Stock</TableCell>
+      <TableCell>{isCart ? '수량' : 'Stock'}</TableCell>
       <TableCell />
     </Wrapper>
   );

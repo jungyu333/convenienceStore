@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Container, TableContainer } from '@mui/material';
 import styled from 'styled-components';
-import TableHeader from '../../components/upload/TableHeader';
-import TableRow from '../../components/upload/TableRow';
+import TableHeader from '../../components/common/TableHeader';
+import TableRow from '../../components/common/TableRow';
 import UpLoadButton from '../../components/upload/UpLoadButton';
 import { RootState, useAppDispatch } from '../../store/store';
 import { resetProductDone } from '../../reducer/product';
@@ -30,7 +30,7 @@ function UpLoad() {
     <Wrapper>
       <CustomTableContainer>
         <TableHeader />
-        <TableRow products={products} />
+        <TableRow products={products!} />
       </CustomTableContainer>
       <UpLoadButton />
     </Wrapper>

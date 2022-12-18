@@ -55,4 +55,51 @@ router.post('/', isLoggedIn, async (req, res, next) => {
   }
 });
 
+// load carts
+router.get('/', isLoggedIn, async (req, res, next) => {
+  try {
+    const carts = await Cart.find({
+      where: {
+        user: {
+          id: req.user?.id,
+        },
+      },
+      relations: ['product', 'product.imageUrl'],
+    });
+    res.status(200).json(carts);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// cart delete
+router.post('/delete', isLoggedIn, async (req, res, next) => {
+  try {
+    const cartId = req.body.cartId;
+
+    const cartItem = await Cart.findOne({
+      where: {
+        id: cartId,
+        user: {
+          id: req.user?.id,
+        },
+      },
+    });
+
+    if (cartItem) {
+      cartItem.user = null;
+      cartItem.remove();
+      await Cart.delete({
+        id: cartId,
+      });
+      return res.status(200).json(cartId);
+    } else {
+      return res.status(400).send('존재하지 않는 상품입니다.');
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
 export default router;
