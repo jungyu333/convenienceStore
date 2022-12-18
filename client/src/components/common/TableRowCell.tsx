@@ -2,6 +2,7 @@ import { Avatar } from '@mui/material';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ITableRowCellProps } from '../../@types/common';
+import { deleteCart } from '../../action/cart';
 import { deleteProduct } from '../../action/product';
 import { useAppDispatch } from '../../store/store';
 import StockControll from './StockControll';
@@ -58,6 +59,10 @@ function TableRowCell({ product, cart }: ITableRowCellProps) {
   const onClickDelete = () => {
     dispatch(deleteProduct({ id: product!.id }));
   };
+
+  const onClickCartDelete = () => {
+    dispatch(deleteCart(cart!.id));
+  };
   return (
     <Wrapper>
       <TableCell>
@@ -75,7 +80,7 @@ function TableRowCell({ product, cart }: ITableRowCellProps) {
           <>
             <EditContainer>
               <svg
-                onClick={onClickDelete}
+                onClick={onClickCartDelete}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 320 512"
               >

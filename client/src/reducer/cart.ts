@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { ICart } from '../@types/common';
-import { addCart, loadCarts } from '../action/cart';
+import { addCart, deleteCart, loadCarts } from '../action/cart';
 
 interface cartState {
   addCartLoading: boolean;
@@ -10,6 +10,9 @@ interface cartState {
   loadCartsLoading: boolean;
   loadCartsDone: boolean;
   loadCartsError: string | null;
+  deleteCartLoading: boolean;
+  deleteCartDone: boolean;
+  deleteCartError: string | null;
   total: number;
   carts: ICart[] | null;
 }
@@ -21,6 +24,9 @@ export const initialState: cartState = {
   loadCartsLoading: false,
   loadCartsDone: false,
   loadCartsError: null,
+  deleteCartLoading: false,
+  deleteCartDone: false,
+  deleteCartError: null,
   total: 0,
   carts: null,
 };
@@ -71,6 +77,26 @@ const cartSlice = createSlice({
         state.loadCartsLoading = false;
         state.loadCartsDone = false;
         state.loadCartsError = action.payload as string;
+      })
+      .addCase(deleteCart.pending, state => {
+        state.deleteCartLoading = true;
+        state.deleteCartDone = false;
+      })
+      .addCase(deleteCart.fulfilled, (state, action) => {
+        state.deleteCartLoading = false;
+        state.deleteCartDone = true;
+        state.carts = state.carts!.filter(cart => cart.id !== action.payload);
+      })
+      .addCase(deleteCart.rejected, (state, action) => {
+        state.deleteCartLoading = false;
+        state.deleteCartDone = false;
+
+        state.deleteCartError = action.payload as string;
+        toast.error(state.deleteCartError, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1000,
+          hideProgressBar: true,
+        });
       });
   },
 });

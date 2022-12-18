@@ -28,7 +28,7 @@ function Cart() {
     if (carts) {
       dispatch(setTotal(uesGetTotal(carts!)));
     }
-  }, [dispatch, carts]);
+  }, [dispatch]);
   return (
     <Wrapper>
       <CustomTableContainer>

@@ -31,3 +31,16 @@ export const loadCarts = createAsyncThunk<ICart[]>(
     }
   },
 );
+
+// cart delete
+export const deleteCart = createAsyncThunk<number | string, number>(
+  'cart/delete',
+  async (data, thunkApi) => {
+    try {
+      const response = await axios.post('/api/cart/delete', { cartId: data });
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data);
+    }
+  },
+);
