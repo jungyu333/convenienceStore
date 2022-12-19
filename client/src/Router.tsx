@@ -9,8 +9,9 @@ import UpLoad from './Routes/admin/UpLoad';
 import NewProduct from './Routes/admin/NewProduct';
 import ProductDetail from './Routes/ProductDetail';
 import Cart from './Routes/Cart';
-import Private from './components/common/Private';
-import Public from './components/common/Public';
+import Private from './Routes/Private';
+import Public from './Routes/Public';
+import Admin from './Routes/Admin';
 
 function Router() {
   return (
@@ -49,9 +50,30 @@ function Router() {
         }
       />
 
-      <Route path="/admin/upload" element={<UpLoad />} />
-      <Route path="/admin/login" element={<AdminLogIn />} />
-      <Route path="/admin/newproduct" element={<NewProduct />} />
+      <Route
+        path="/admin/upload"
+        element={
+          <Admin>
+            <UpLoad />
+          </Admin>
+        }
+      />
+      <Route
+        path="/admin/login"
+        element={
+          <Public>
+            <AdminLogIn />
+          </Public>
+        }
+      />
+      <Route
+        path="/admin/newproduct"
+        element={
+          <Admin>
+            <NewProduct />
+          </Admin>
+        }
+      />
       <Route path="/product/:id" element={<ProductDetail />} />
     </Routes>
   );

@@ -1,16 +1,16 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { IAuthProps } from '../../@types/common';
-import { RootState } from '../../store/store';
+import { IAuthProps } from '../@types/common';
+import { RootState } from '../store/store';
 
-function Private({ children }: IAuthProps) {
+function Public({ children }: IAuthProps) {
   const { me } = useSelector((state: RootState) => state.user);
 
-  if (!me) {
+  if (me) {
     return <Navigate to="/" />;
   }
   return <>{children}</>;
 }
 
-export default Private;
+export default Public;
