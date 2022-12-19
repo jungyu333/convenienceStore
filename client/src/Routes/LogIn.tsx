@@ -7,7 +7,7 @@ import LogInForm from '../components/login/LogInForm';
 
 function LogIn() {
   const navigation = useNavigate();
-  const { authDone, loginDone } = useSelector((state: RootState) => state.user);
+  const { authDone } = useSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (authDone) {
@@ -15,11 +15,7 @@ function LogIn() {
     }
     dispatch(resetAvatar());
   }, [dispatch, authDone]);
-  useEffect(() => {
-    if (loginDone) {
-      navigation('/', { replace: true });
-    }
-  }, [navigation, loginDone]);
+
   return (
     <>
       <LogInForm headerText="with your account" />

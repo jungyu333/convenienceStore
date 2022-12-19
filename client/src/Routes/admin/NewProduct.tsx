@@ -113,7 +113,7 @@ function NewProduct() {
 
   useEffect(() => {
     dispatch(resetImages());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (uploadProductDone) {
