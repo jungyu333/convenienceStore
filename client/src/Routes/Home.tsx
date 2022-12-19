@@ -42,7 +42,6 @@ function Home() {
   const dispatch = useAppDispatch();
   const { products } = useSelector((state: RootState) => state.product);
   useEffect(() => {
-    dispatch(loadMyInfo());
     dispatch(loadProducts());
   }, [dispatch]);
   return (

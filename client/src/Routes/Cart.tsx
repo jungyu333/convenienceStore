@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { loadCarts } from '../action/cart';
+import { loadMyInfo } from '../action/user';
 import TotalBox from '../components/cart/TotalBox';
 import TableHeader from '../components/common/TableHeader';
 import TableRow from '../components/common/TableRow';
@@ -25,10 +26,13 @@ function Cart() {
 
   useEffect(() => {
     dispatch(loadCarts());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (carts) {
       dispatch(setTotal(uesGetTotal(carts!)));
     }
-  }, [dispatch]);
+  }, [carts, dispatch]);
   return (
     <Wrapper>
       <CustomTableContainer>

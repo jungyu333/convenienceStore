@@ -1,5 +1,6 @@
 import express from 'express';
 import passport from 'passport';
+import Cart from '../entities/Cart';
 import User from '../entities/User';
 import sendMail from '../nodemailer/index';
 import randomNumber from '../util/randomNumber';
@@ -91,6 +92,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
         where: { id: req.user?.id },
         select: {
           id: true,
+          email: true,
           nickname: true,
           avatarUrn: true,
           role: true,
@@ -104,6 +106,11 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
 
 //logout
 router.post('/logout', isLoggedIn, async (req, res, next) => {
+  await Cart.delete({
+    user: {
+      id: req.user?.id,
+    },
+  });
   req.logout(err => {
     if (err) {
       return next(err);
