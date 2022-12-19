@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export interface ISubmitButtonProps {
   text: string;
 }
@@ -47,4 +49,8 @@ export interface ICart {
   updatedAt: string;
   quantity: number;
   product: IProduct;
+}
+
+export interface IAuthProps {
+  children: ReactNode;
 }

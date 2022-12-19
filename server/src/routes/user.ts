@@ -92,6 +92,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
         where: { id: req.user?.id },
         select: {
           id: true,
+          email: true,
           nickname: true,
           avatarUrn: true,
           role: true,
