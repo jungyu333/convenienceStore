@@ -17,7 +17,7 @@ const Wrapper = styled(Container)`
   margin: 0 auto;
   height: 100vh;
   padding: 2rem;
-  min-height: 900px;
+  min-height: 750px;
   @media ${({ theme }) => theme.device.laptop} {
     display: flex;
     flex-direction: column;
