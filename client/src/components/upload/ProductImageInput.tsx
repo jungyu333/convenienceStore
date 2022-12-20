@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import Dropzone from 'react-dropzone';
 import styled from 'styled-components';
 import { uploadImage } from '../../action/product';
@@ -48,10 +48,7 @@ const Image = styled.div`
 
 function ProductImageInput() {
   const dispatch = useAppDispatch();
-  const imageInput = useRef<HTMLInputElement>(null);
-  const onClickAvatarUpload = () => {
-    imageInput.current?.click();
-  };
+
   const imageUpload = (files: File[]) => {
     const imageForm = new FormData();
     imageForm.append('image', files[0]);

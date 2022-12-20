@@ -36,7 +36,10 @@ function ProductPreview() {
         <Wrapper>
           {imagePath.map((image, index) => (
             <ImageContainer key={index}>
-              <img src={`${process.env.REACT_APP_SERVER_URL}/${image}`} />
+              <img
+                src={`${process.env.REACT_APP_SERVER_URL}/${image}`}
+                alt="image"
+              />
               <DeleteImageButton image={image} />
             </ImageContainer>
           ))}

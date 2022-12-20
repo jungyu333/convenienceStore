@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { loadMyInfo } from '../action/user';
 import { RootState, useAppDispatch } from '../store/store';
 import { Container } from '@mui/material';
 import styled from 'styled-components';

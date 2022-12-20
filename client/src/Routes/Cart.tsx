@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { loadCarts } from '../action/cart';
-import { loadMyInfo } from '../action/user';
 import TotalBox from '../components/cart/TotalBox';
 import TableHeader from '../components/common/TableHeader';
 import TableRow from '../components/common/TableRow';

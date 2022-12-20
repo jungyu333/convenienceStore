@@ -152,7 +152,7 @@ function ProductDetail() {
     if (id) {
       dispatch(loadProduct(id));
     }
-  }, [dispatch]);
+  }, [dispatch, id]);
   const { product, loadProductLoading, quantity } = useSelector(
     (state: RootState) => state.product,
   );
