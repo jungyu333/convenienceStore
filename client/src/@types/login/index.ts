@@ -35,3 +35,7 @@ export interface ILogInFormProps {
   isAdmin?: boolean;
   headerText: string;
 }
+
+export interface ISocialButtonProps {
+  type: 'kakao' | 'google';
+}

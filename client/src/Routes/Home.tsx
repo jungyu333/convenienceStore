@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { loadMyInfo } from '../action/user';
 import { RootState, useAppDispatch } from '../store/store';
 import { Container } from '@mui/material';
 import styled from 'styled-components';
 import ProductCard from '../components/home/ProductCard';
 import { loadProducts } from '../action/product';
 import { useSelector } from 'react-redux';
+import { loadMyInfo } from '../action/user';
 
 const Wrapper = styled(Container)`
   margin: 0 auto;
@@ -40,10 +40,14 @@ const MainContainer = styled.div`
 
 function Home() {
   const dispatch = useAppDispatch();
+  const { me } = useSelector((state: RootState) => state.user);
   const { products } = useSelector((state: RootState) => state.product);
   useEffect(() => {
+    if (!me) {
+      dispatch(loadMyInfo());
+    }
     dispatch(loadProducts());
-  }, [dispatch]);
+  }, [dispatch, me]);
   return (
     <Wrapper>
       <MainTitle>상품 List</MainTitle>

@@ -9,13 +9,14 @@ import { adminLogIn, userLogIn } from '../../action/user';
 import { useAppDispatch } from '../../store/store';
 import Input from '../common/Input';
 import SubmitButton from '../common/SubmitButton';
+import SocialLogIn from './SocialLogIn';
 
 const Wrapper = styled(Container)`
   background-color: ${({ theme }) => theme.colors.gray};
   margin: 0 auto;
   height: 100vh;
   padding: 2rem;
-  min-height: 900px;
+  min-height: 700px;
   @media ${({ theme }) => theme.device.laptop} {
     display: flex;
     flex-direction: column;
@@ -36,6 +37,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   @media ${({ theme }) => theme.device.laptop} {
     height: 70vh;
     width: 90%;
@@ -152,6 +154,7 @@ function LogInForm({ isAdmin, headerText }: ILogInFormProps) {
           <Link to={'/signup'}>계정이 없으신가요?</Link>
         </BottomButtonContainer>
         <SubmitButton text="Log In" />
+        <SocialLogIn />
       </Form>
     </Wrapper>
   );

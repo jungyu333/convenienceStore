@@ -36,7 +36,14 @@ export default class User extends BaseEntity {
   @Expose()
   get avatarUrl(): string {
     if (this.avatarUrn) {
-      return `${process.env.SERVER_BASE_URL}/${this.avatarUrn}`;
+      if (
+        this.avatarUrn.includes('http://k.kakaocdn') ||
+        this.avatarUrn.includes('https://lh3.googleusercontent')
+      ) {
+        return this.avatarUrn;
+      } else {
+        return `${process.env.SERVER_BASE_URL}/${this.avatarUrn}`;
+      }
     } else {
       return 'https://www.gravatar.com/avatar?d=mp&f=y';
     }
