@@ -8,6 +8,30 @@ import { isLoggedIn, isNotLoggedIn } from './middleware';
 
 const router = express.Router();
 
+// google login
+router.get(
+  '/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] }),
+);
+
+router.get('/google/callback', isNotLoggedIn, async (req, res, next) => {
+  passport.authenticate('google', (err, user, info) => {
+    if (err) {
+      console.error(err);
+      return next(err);
+    }
+    if (info) {
+      return res.status(401).send(info.message);
+    }
+    if (!user) {
+      return res.redirect(`${process.env.ORIGIN_URL}/login`);
+    }
+    req.logIn(user, function (err) {
+      return res.redirect(`${process.env.ORIGIN_URL}`);
+    });
+  })(req, res, next);
+});
+
 // kakao login
 router.get('/kakao', passport.authenticate('kakao'));
 

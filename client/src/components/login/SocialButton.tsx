@@ -49,7 +49,9 @@ function SocialButton({ type }: ISocialButtonProps) {
     return (
       <Wrapper>
         <SocialIcon>
-          <RiGoogleFill />
+          <a href={`${process.env.REACT_APP_SERVER_URL}/api/user/google`}>
+            <RiGoogleFill />
+          </a>
         </SocialIcon>
       </Wrapper>
     );
