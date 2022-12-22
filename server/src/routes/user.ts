@@ -8,6 +8,27 @@ import { isLoggedIn, isNotLoggedIn } from './middleware';
 
 const router = express.Router();
 
+// kakao login
+router.get('/kakao', passport.authenticate('kakao'));
+
+router.get(`/kakao/callback`, isNotLoggedIn, async (req, res, next) => {
+  passport.authenticate('kakao', (err, user, info) => {
+    if (err) {
+      console.error(err);
+      return next(err);
+    }
+    if (info) {
+      return res.status(401).send(info.message);
+    }
+    if (!user) {
+      return res.redirect(`${process.env.ORIGIN_URL}/login`);
+    }
+    req.logIn(user, function (err) {
+      return res.redirect(`${process.env.ORIGIN_URL}`);
+    });
+  })(req, res, next);
+});
+
 //load myinfo
 router.get('/', async (req, res, next) => {
   try {

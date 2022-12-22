@@ -18,33 +18,36 @@ const Wrapper = styled.div`
   }
 `;
 const SocialIcon = styled.div`
-  width: 30px;
+  width: 100%;
   height: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
-  & svg {
+  & a {
     width: 100%;
     height: 100%;
     fill: ${({ theme }) => theme.colors.black};
+    & svg {
+      width: 100%;
+      height: 100%;
+    }
   }
 `;
 
 function SocialButton({ type }: ISocialButtonProps) {
-  const onClickSocial = () => {
-    console.log(type);
-  };
   if (type === 'kakao') {
     return (
-      <Wrapper onClick={onClickSocial}>
+      <Wrapper>
         <SocialIcon>
-          <RiKakaoTalkFill />
+          <a href={`${process.env.REACT_APP_SERVER_URL}/api/user/kakao`}>
+            <RiKakaoTalkFill />
+          </a>
         </SocialIcon>
       </Wrapper>
     );
   } else if (type == 'google') {
     return (
-      <Wrapper onClick={onClickSocial}>
+      <Wrapper>
         <SocialIcon>
           <RiGoogleFill />
         </SocialIcon>
