@@ -3,6 +3,7 @@ import {
   UseFormGetValues,
   UseFormRegisterReturn,
 } from 'react-hook-form';
+import { IProduct } from '../common';
 import { ISignUpData } from '../signup';
 
 export interface IInputProps {
@@ -29,6 +30,10 @@ export interface IMyInfo {
   provider: string;
   role: number;
   products?: any;
+}
+
+export interface IAdminInfo extends IMyInfo {
+  product: IProduct[];
 }
 
 export interface ILogInFormProps {
