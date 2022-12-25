@@ -1,6 +1,7 @@
 import passport from 'passport';
 import User from '../entities/User';
 import admin from './admin';
+import google from './google';
 import kakao from './kakao';
 import local from './local';
 
@@ -23,4 +24,5 @@ export default () => {
   local();
   admin();
   kakao();
+  google();
 };

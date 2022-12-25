@@ -6,8 +6,10 @@ import { RootState } from '../store/store';
 
 function Admin({ children }: IAuthProps) {
   const { me } = useSelector((state: RootState) => state.user);
-
-  if (me && me.role !== 1) {
+  if (!me) {
+    return <Navigate to="/" />;
+  }
+  if (me.role !== 1) {
     return <Navigate to="/" />;
   }
   return <>{children}</>;

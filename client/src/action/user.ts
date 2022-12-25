@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { IEmailAuthData } from '../@types/signup';
-import { ILogInData, IMyInfo } from '../@types/login';
+import { IAdminInfo, ILogInData, IMyInfo } from '../@types/login';
 
 //email 인증
 export const emailAuth = createAsyncThunk<number, IEmailAuthData>(
@@ -76,7 +76,7 @@ export const loadMyInfo = createAsyncThunk<IMyInfo>(
 );
 
 //admin login
-export const adminLogIn = createAsyncThunk<IMyInfo, ILogInData>(
+export const adminLogIn = createAsyncThunk<IAdminInfo, ILogInData>(
   'admin/login',
   async (data, thunkApi) => {
     try {
