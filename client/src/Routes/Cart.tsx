@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { loadCarts } from '../action/cart';
+import Map from '../components/cart/Map';
 import TotalBox from '../components/cart/TotalBox';
 import TableHeader from '../components/common/TableHeader';
 import TableRow from '../components/common/TableRow';
@@ -70,6 +71,7 @@ function Cart() {
         )}
       </CustomTableContainer>
       <TotalBox total={total} />
+      <Map />
     </Wrapper>
   );
 }
