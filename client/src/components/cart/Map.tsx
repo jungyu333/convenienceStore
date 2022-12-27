@@ -2,6 +2,9 @@ import { Container } from '@mui/material';
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { FiRefreshCw } from 'react-icons/fi';
+import { RootState, useAppDispatch } from '../../store/store';
+import { loadStorePosition } from '../../action/store';
+import { useSelector } from 'react-redux';
 
 const Wrapper = styled(Container)`
   margin-top: 50px;
@@ -37,12 +40,14 @@ const MapContainer = styled.div`
 `;
 
 function Map() {
+  const dispatch = useAppDispatch();
+  const { storePosition } = useSelector((state: RootState) => state.store);
   const mapElement = useRef(null);
   useEffect(() => {
     if (!mapElement.current || !naver) return;
     const location = new window.naver.maps.LatLng(
-      37.5415535032815,
-      127.0793650549112,
+      Number(process.env.REACT_APP_CENTER_LATITUDE!),
+      Number(process.env.REACT_APP_CENTER_LONGITUDE!),
     );
     const mapOptions: naver.maps.MapOptions = {
       center: location,
@@ -50,17 +55,26 @@ function Map() {
       minZoom: 17,
       zoomControl: false,
     };
-
     const map = new naver.maps.Map(mapElement.current, mapOptions);
+    if (storePosition) {
+      new naver.maps.Marker({
+        position: new naver.maps.LatLng(storePosition.lat, storePosition.log),
+        map: map,
+      });
+    }
 
     return () => {};
-  }, []);
+  }, [storePosition]);
+  const onClickMark = () => {
+    dispatch(loadStorePosition());
+  };
+
   return (
     <Wrapper>
       <Header>
         <h1>편의점 위치보기</h1>
         <div>
-          <FiRefreshCw />
+          <FiRefreshCw onClick={onClickMark} />
         </div>
       </Header>
       <MapContainer ref={mapElement} />
