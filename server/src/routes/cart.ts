@@ -102,4 +102,5 @@ router.post('/delete', isLoggedIn, async (req, res, next) => {
     next(error);
   }
 });
+
 export default router;

@@ -45,7 +45,7 @@ function SocialButton({ type }: ISocialButtonProps) {
         </SocialIcon>
       </Wrapper>
     );
-  } else if (type == 'google') {
+  } else if (type === 'google') {
     return (
       <Wrapper>
         <SocialIcon>
