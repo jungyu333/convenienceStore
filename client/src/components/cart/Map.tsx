@@ -45,6 +45,7 @@ function Map() {
   const mapElement = useRef(null);
   useEffect(() => {
     if (!mapElement.current || !naver) return;
+
     const location = new window.naver.maps.LatLng(
       Number(process.env.REACT_APP_CENTER_LATITUDE!),
       Number(process.env.REACT_APP_CENTER_LONGITUDE!),
@@ -56,6 +57,9 @@ function Map() {
       zoomControl: false,
     };
     const map = new naver.maps.Map(mapElement.current, mapOptions);
+    if (!storePosition) {
+      dispatch(loadStorePosition());
+    }
     if (storePosition) {
       new naver.maps.Marker({
         position: new naver.maps.LatLng(storePosition.lat, storePosition.log),
@@ -65,6 +69,7 @@ function Map() {
 
     return () => {};
   }, [storePosition]);
+
   const onClickMark = () => {
     dispatch(loadStorePosition());
   };
