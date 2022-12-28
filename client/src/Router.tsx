@@ -12,6 +12,7 @@ import Cart from './Routes/Cart';
 import Private from './Routes/Private';
 import Public from './Routes/Public';
 import Admin from './Routes/Admin';
+import Call from './Routes/Call';
 
 function Router() {
   return (
@@ -75,6 +76,14 @@ function Router() {
         }
       />
       <Route path="/product/:id" element={<ProductDetail />} />
+      <Route
+        path="/call"
+        element={
+          <Private>
+            <Call />
+          </Private>
+        }
+      />
     </Routes>
   );
 }
