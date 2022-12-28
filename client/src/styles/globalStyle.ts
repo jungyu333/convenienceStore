@@ -98,7 +98,7 @@ video {
     color: black;
   }
   :visited {
-    color:black ;
+    color:none ;
   }
 }
 article,
